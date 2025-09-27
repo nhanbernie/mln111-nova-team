@@ -1,7 +1,83 @@
-import HeroPage from "./app/hero/page";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import LoadingScreen from "./components/LoadingScreen";
+import AnimatedTitle from "./components/AnimatedTitle";
+import MusicToggle from "./components/MusicToggle";
+import BottomNavBar from "./components/BottomNavBar";
 
-function App() {
-  return <HeroPage />;
+function MLN() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setTimeout(() => setShowContent(true), 500);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Audio element */}
+      <audio ref={audioRef} loop>
+        <source src="/music.mp3" type="audio/mpeg" />
+      </audio>
+
+      {/* Music Toggle Button */}
+      <MusicToggle isPlaying={isPlaying} onToggle={toggleMusic} />
+
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/pastel-yellow-vignette.jpg')",
+        }}
+      >
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/20"></div>
+      </div>
+
+      {/* Loading Screen */}
+      <AnimatePresence>{isLoading && <LoadingScreen />}</AnimatePresence>
+
+      {/* Main Content */}
+      <AnimatePresence>
+        {showContent && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="relative z-10 flex items-center justify-center min-h-screen p-8"
+          >
+            <div className="max-w-7xl mx-auto text-center">
+              {/* Animated Title */}
+              <AnimatedTitle />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Bottom Navigation Bar */}
+      {showContent && <BottomNavBar />}
+    </div>
+  );
 }
 
-export default App;
+export default MLN;
