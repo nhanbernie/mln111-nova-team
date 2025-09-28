@@ -4,12 +4,15 @@ import LoadingScreen from "./components/LoadingScreen";
 import AnimatedTitle from "./components/AnimatedTitle";
 import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
+import FloatingFlags from "./components/FloatingFlags";
+import SmokeEffect from "./components/SmokeEffect";
 
 function MLN() {
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -34,7 +37,7 @@ function MLN() {
   }, []);
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="relative">
       {/* Audio element */}
       <audio ref={audioRef} loop>
         <source src="/music.mp3" type="audio/mpeg" />
@@ -43,15 +46,21 @@ function MLN() {
       {/* Music Toggle Button */}
       <MusicToggle isPlaying={isPlaying} onToggle={toggleMusic} />
 
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/pastel-yellow-vignette.jpg')",
-        }}
-      >
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/20"></div>
+      {/* Fixed Background - không bị giãn */}
+      <div className="fixed inset-0 -z-10">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[oklch(95%_0.03_240)] to-[oklch(78%_0.07_230)]" />
+
+        {/* Background Image - fixed size */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+          style={{
+            backgroundImage: "url('/pastel-yellow-vignette.jpg')",
+          }}
+        >
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
       </div>
 
       {/* Loading Screen */}
@@ -74,6 +83,9 @@ function MLN() {
         )}
       </AnimatePresence>
 
+      {/* Floating 3D Flags */}
+      {showContent && <FloatingFlags />}
+      {showContent && <SmokeEffect />}
       {/* Bottom Navigation Bar */}
       {showContent && <BottomNavBar />}
     </div>

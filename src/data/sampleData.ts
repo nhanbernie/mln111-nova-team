@@ -1,5 +1,77 @@
 import type { SiteConfig } from "../types";
 
+// Team Members Data
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  avatar: string;
+  color: string;
+  skills: string[];
+  social: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+    website?: string;
+  };
+}
+
+export const teamMembers: TeamMember[] = [
+  {
+    id: "leader",
+    name: "Nguyễn Văn An",
+    role: "Trưởng nhóm",
+    bio: "Chuyên gia về chính sách công và quản lý nhà nước với hơn 15 năm kinh nghiệm trong lĩnh vực cải cách hành chính.",
+    avatar: "/api/placeholder/300/300",
+    color: "#8B4513",
+    skills: ["Chính sách công", "Quản lý nhà nước", "Cải cách hành chính"],
+    social: {
+      linkedin: "https://linkedin.com/in/nguyen-van-an",
+      website: "https://nguyenvanan.gov.vn",
+    },
+  },
+  {
+    id: "researcher",
+    name: "Trần Thị Bình",
+    role: "Nghiên cứu viên",
+    bio: "Tiến sĩ Khoa học Chính trị, chuyên nghiên cứu về hệ thống chính trị và quá trình dân chủ hóa.",
+    avatar: "/api/placeholder/300/300",
+    color: "#D97706",
+    skills: ["Nghiên cứu chính trị", "Phân tích dữ liệu", "Phương pháp nghiên cứu"],
+    social: {
+      linkedin: "https://linkedin.com/in/tran-thi-binh",
+      github: "https://github.com/tranthibinh",
+    },
+  },
+  {
+    id: "analyst",
+    name: "Lê Minh Cường",
+    role: "Chuyên gia phân tích",
+    bio: "Chuyên gia về kinh tế chính trị và phân tích chính sách, có nhiều công trình nghiên cứu được đánh giá cao.",
+    avatar: "/api/placeholder/300/300",
+    color: "#B45309",
+    skills: ["Kinh tế chính trị", "Phân tích chính sách", "Mô hình hóa"],
+    social: {
+      twitter: "https://twitter.com/leminhcuong",
+      website: "https://leminhcuong.edu.vn",
+    },
+  },
+  {
+    id: "consultant",
+    name: "Phạm Thị Dung",
+    role: "Cố vấn chính sách",
+    bio: "Cựu cán bộ Bộ Nội vụ, có kinh nghiệm thực tiễn trong xây dựng và thực thi các chính sách công.",
+    avatar: "/api/placeholder/300/300",
+    color: "#92400E",
+    skills: ["Cố vấn chính sách", "Thực thi chính sách", "Đánh giá tác động"],
+    social: {
+      linkedin: "https://linkedin.com/in/pham-thi-dung",
+      website: "https://phamthidung.org",
+    },
+  },
+];
+
 export const sampleSiteConfig: SiteConfig = {
   hero: {
     headline: "Artisan Chronicles",

@@ -54,6 +54,7 @@ export interface Member {
   };
 }
 
+
 export interface ScrollProgress {
   scrollY: number;
   scrollYProgress: number;

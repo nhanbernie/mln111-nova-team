@@ -256,3 +256,111 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #6e2f2f;
 }
+
+/* 3D Flag Scene Utilities */
+.flag-scene-gradient {
+  background: linear-gradient(
+    135deg,
+    oklch(95% 0.03 240) 0%,
+    oklch(90% 0.05 235) 25%,
+    oklch(85% 0.06 230) 50%,
+    oklch(80% 0.07 225) 75%,
+    oklch(78% 0.07 230) 100%
+  );
+}
+
+.flag-container {
+  background: radial-gradient(
+    ellipse at center,
+    oklch(96% 0.02 245) 0%,
+    oklch(92% 0.04 240) 50%,
+    oklch(88% 0.06 235) 100%
+  );
+}
+
+/* Team Carousel Utilities */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.team-card-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.team-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  color: white;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.team-card-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.team-card-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.team-card-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.team-card-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Border utilities */
+.border-3 {
+  border-width: 3px;
+}
+
+/* Fixed Flag Utilities */
+.fixed-flag {
+  position: fixed !important;
+  transform: translate3d(0, 0, 0) !important;
+  will-change: auto !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* Canvas Fixed Position */
+.fixed-flag canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: translate3d(0, 0, 0) !important;
+  will-change: auto !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  touch-action: none !important;
+}
+
+/* Disable all interactions on fixed flag */
+.fixed-flag * {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  touch-action: none !important;
+}
