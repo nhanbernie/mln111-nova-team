@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function ProjectsPage() {
+export default function LessonsPage() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -10,10 +10,10 @@ export default function ProjectsPage() {
     >
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-6xl font-bold text-white mb-8 drop-shadow-lg">
-          Dự Án
+          Bài Học
         </h1>
         <p className="text-xl text-white/90 leading-relaxed drop-shadow-md">
-          Khám phá những dự án đang được thực hiện.
+          Khám phá những bài học bổ ích và kiến thức mới.
         </p>
       </div>
     </motion.div>

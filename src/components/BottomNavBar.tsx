@@ -18,15 +18,10 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { id: "home", icon: HomeIcon, label: "Trang chủ", color: "#8B4513" },
-  { id: "about", icon: BookOpenIcon, label: "Giới thiệu", color: "#D97706" },
-  { id: "team", icon: BriefcaseIcon, label: "Đội ngũ", color: "#B45309" },
-  { id: "projects", icon: CpuChipIcon, label: "Dự án", color: "#92400E" },
-  {
-    id: "contact",
-    icon: QuestionMarkCircleIcon,
-    label: "Liên hệ",
-    color: "#92400E",
-  },
+  { id: "lessons", icon: BookOpenIcon, label: "Bài học", color: "#D97706" },
+  { id: "practice", icon: BriefcaseIcon, label: "Thực tiễn", color: "#B45309" },
+  { id: "quiz", icon: QuestionMarkCircleIcon, label: "Quiz", color: "#92400E" },
+  { id: "ai", icon: CpuChipIcon, label: "AI", color: "#92400E" },
 ];
 
 const BottomNavBar = () => {
@@ -47,22 +42,22 @@ const BottomNavBar = () => {
   const handleNavClick = (itemId: string) => {
     playClickSound();
     setActiveItem(itemId);
-
+    
     switch (itemId) {
       case "home":
         navigate("/");
         break;
-      case "about":
-        navigate("/about");
+      case "lessons":
+        navigate("/lessons");
         break;
-      case "team":
-        navigate("/team");
+      case "practice":
+        navigate("/practice");
         break;
-      case "projects":
-        navigate("/projects");
+      case "quiz":
+        navigate("/quiz");
         break;
-      case "contact":
-        navigate("/contact");
+      case "ai":
+        navigate("/ai");
         break;
       default:
         navigate("/");

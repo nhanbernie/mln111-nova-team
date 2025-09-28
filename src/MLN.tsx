@@ -6,10 +6,10 @@ import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
 import SmokeEffect from "./components/SmokeEffect";
 import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import TeamPage from "./pages/TeamPage";
-import ContactPage from "./pages/ContactPage";
-import ProjectsPage from "./pages/ProjectsPage";
+import LessonsPage from "./pages/LessonsPage";
+import PracticePage from "./pages/PracticePage";
+import QuizPage from "./pages/QuizPage";
+import AIPage from "./pages/AIPage";
 
 function MLN() {
   const [isLoading, setIsLoading] = useState(true);
@@ -73,10 +73,10 @@ function MLN() {
         {showContent && (
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/lessons" element={<LessonsPage />} />
+            <Route path="/practice" element={<PracticePage />} />
+            <Route path="/quiz" element={<QuizPage />} />
+            <Route path="/ai" element={<AIPage />} />
           </Routes>
         )}
       </AnimatePresence>
