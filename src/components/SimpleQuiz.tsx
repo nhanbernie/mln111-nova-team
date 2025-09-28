@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { gsap } from "gsap";
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
 import { quizQuestions, QUIZ_CONFIG } from "../data/quizData";
 
 interface SimpleQuizProps {
@@ -13,7 +11,6 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answers, setAnswers] = useState<number[]>([]);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const question = quizQuestions[currentQuestion];
@@ -43,7 +40,6 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer(null);
       setIsAnswered(false);
-      setShowCorrectAnswer(false);
     } else {
       // Quiz completed
       const score = newAnswers.filter((answer, index) => 
@@ -58,7 +54,6 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
       setCurrentQuestion(currentQuestion - 1);
       setSelectedAnswer(answers[currentQuestion - 1] || null);
       setIsAnswered(true);
-      setShowCorrectAnswer(true);
     }
   };
 
@@ -88,10 +83,10 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="text-6xl font-bold text-white">
+              <div className="text-6xl font-bold text-white font-dancing-script">
                 {currentQuestion + 1}
               </div>
-              <div className="text-2xl text-white/70">
+              <div className="text-2xl text-white/70 font-dancing-script">
                 /{QUIZ_CONFIG.totalQuestions} câu
               </div>
             </div>
@@ -219,7 +214,7 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20"
           >
-            <h2 className="text-3xl font-bold text-white mb-8 text-center leading-relaxed">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center leading-relaxed font-dancing-script">
               {question.question}
             </h2>
 

@@ -47,7 +47,7 @@ export default function QuizStartPage() {
             className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 shadow-2xl border border-white/20"
           >
             <motion.h1 
-              className="text-6xl font-bold text-white mb-8 drop-shadow-lg"
+              className="text-6xl font-bold text-white mb-8 drop-shadow-lg font-dancing-script"
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -56,7 +56,7 @@ export default function QuizStartPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-white/90 leading-relaxed drop-shadow-md mb-8"
+              className="text-xl text-white/90 leading-relaxed drop-shadow-md mb-8 font-dancing-script"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -70,26 +70,26 @@ export default function QuizStartPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Thông tin Quiz</h2>
+              <h2 className="text-2xl font-bold text-white mb-6 font-dancing-script">Thông tin Quiz</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white/80">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">10</div>
-                  <div className="text-sm">Câu hỏi</div>
+                  <div className="text-4xl font-bold text-white mb-2 font-dancing-script">10</div>
+                  <div className="text-sm font-dancing-script">Câu hỏi</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">30s</div>
-                  <div className="text-sm">Mỗi câu</div>
+                  <div className="text-4xl font-bold text-white mb-2 font-dancing-script">30s</div>
+                  <div className="text-sm font-dancing-script">Mỗi câu</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2">20p</div>
-                  <div className="text-sm">Tổng thời gian</div>
+                  <div className="text-4xl font-bold text-white mb-2 font-dancing-script">20p</div>
+                  <div className="text-sm font-dancing-script">Tổng thời gian</div>
                 </div>
               </div>
             </motion.div>
 
             <motion.button
               onClick={startQuiz}
-              className="bg-gradient-to-r from-[#8B4513] to-[#D97706] text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl transition-all duration-300 hover:shadow-3xl relative overflow-hidden group"
+              className="bg-gradient-to-r from-[#8B4513] to-[#D97706] text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl transition-all duration-300 hover:shadow-3xl relative overflow-hidden group font-dancing-script"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ 
                 opacity: 1, 
