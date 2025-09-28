@@ -69,7 +69,7 @@ const BottomNavBar = () => {
       <audio ref={audioRef} preload="auto">
         <source src="/ui-sound.mp3" type="audio/mpeg" />
       </audio>
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[200]">
         <motion.div
           className="relative"
           onHoverStart={() => {

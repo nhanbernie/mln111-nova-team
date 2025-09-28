@@ -8,7 +8,8 @@ import SmokeEffect from "./components/SmokeEffect";
 import HomePage from "./pages/HomePage";
 import LessonsPage from "./pages/LessonsPage";
 import PracticePage from "./pages/PracticePage";
-import QuizPage from "./pages/QuizPage";
+import QuizStartPage from "./pages/QuizStartPage";
+import QuizPlayPage from "./pages/QuizPlayPage";
 import AIPage from "./pages/AIPage";
 
 function MLN() {
@@ -75,7 +76,8 @@ function MLN() {
             <Route path="/" element={<HomePage />} />
             <Route path="/lessons" element={<LessonsPage />} />
             <Route path="/practice" element={<PracticePage />} />
-            <Route path="/quiz" element={<QuizPage />} />
+            <Route path="/quiz" element={<QuizStartPage />} />
+            <Route path="/quiz/start" element={<QuizPlayPage />} />
             <Route path="/ai" element={<AIPage />} />
           </Routes>
         )}
