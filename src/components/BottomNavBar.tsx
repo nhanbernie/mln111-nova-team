@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   HomeIcon,
   BookOpenIcon,
@@ -26,12 +26,29 @@ const navItems: NavItem[] = [
 const BottomNavBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("home");
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const playClickSound = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(() => {
+        console.log("Audio play failed");
+      });
+    }
+  };
 
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+    <>
+      <audio ref={audioRef} preload="auto">
+        <source src="/ui-sound.mp3" type="audio/mpeg" />
+      </audio>
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
       <motion.div
         className="relative"
-        onHoverStart={() => setIsExpanded(true)}
+        onHoverStart={() => {
+          playClickSound();
+          setIsExpanded(true);
+        }}
         onHoverEnd={() => setIsExpanded(false)}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
@@ -152,7 +169,10 @@ const BottomNavBar = () => {
                       duration: 0.4,
                       ease: [0.68, -0.55, 0.265, 1.55],
                     }}
-                    onClick={() => setActiveItem(item.id)}
+                    onClick={() => {
+                      playClickSound();
+                      setActiveItem(item.id);
+                    }}
                     className="relative group"
                   >
                     {/* Button Container */}
@@ -237,6 +257,7 @@ const BottomNavBar = () => {
         </AnimatePresence>
       </motion.div>
     </div>
+    </>
   );
 };
 
