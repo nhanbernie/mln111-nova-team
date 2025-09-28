@@ -4,15 +4,14 @@ import LoadingScreen from "./components/LoadingScreen";
 import AnimatedTitle from "./components/AnimatedTitle";
 import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
-import FloatingFlags from "./components/FloatingFlags";
 import SmokeEffect from "./components/SmokeEffect";
+import ScrollSections from "./components/ScrollSections";
 
 function MLN() {
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -38,12 +37,10 @@ function MLN() {
 
   return (
     <div className="relative">
-      {/* Audio element */}
       <audio ref={audioRef} loop>
         <source src="/music.mp3" type="audio/mpeg" />
       </audio>
 
-      {/* Music Toggle Button */}
       <MusicToggle isPlaying={isPlaying} onToggle={toggleMusic} />
 
       {/* Fixed Background - không bị giãn */}
@@ -84,8 +81,9 @@ function MLN() {
       </AnimatePresence>
 
       {/* Floating 3D Flags */}
-      {showContent && <FloatingFlags />}
+      {/* {showContent && <FloatingFlags />} */}
       {showContent && <SmokeEffect />}
+      {showContent && <ScrollSections />}
       {/* Bottom Navigation Bar */}
       {showContent && <BottomNavBar />}
     </div>

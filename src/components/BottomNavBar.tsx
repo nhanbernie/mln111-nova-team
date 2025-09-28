@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import {
   HomeIcon,
   BookOpenIcon,
-  DocumentTextIcon,
-  UserIcon,
+  BriefcaseIcon,
+  QuestionMarkCircleIcon,
+  CpuChipIcon,
 } from "@heroicons/react/24/outline";
 
 interface NavItem {
@@ -17,37 +18,17 @@ interface NavItem {
 const navItems: NavItem[] = [
   { id: "home", icon: HomeIcon, label: "Trang chủ", color: "#8B4513" },
   { id: "lessons", icon: BookOpenIcon, label: "Bài học", color: "#D97706" },
-  {
-    id: "documents",
-    icon: DocumentTextIcon,
-    label: "Tài liệu",
-    color: "#B45309",
-  },
-  { id: "profile", icon: UserIcon, label: "Hồ sơ", color: "#92400E" },
+  { id: "practice", icon: BriefcaseIcon, label: "Thực tiễn", color: "#B45309" },
+  { id: "quiz", icon: QuestionMarkCircleIcon, label: "Quiz", color: "#92400E" },
+  { id: "ai", icon: CpuChipIcon, label: "AI", color: "#92400E" },
 ];
 
 const BottomNavBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("home");
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  const playClickSound = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {
-        // Ignore audio play errors
-      });
-    }
-  };
 
   return (
-    <>
-      {/* Audio element for click sound */}
-      <audio ref={audioRef} preload="auto">
-        <source src="/ui-sound.mp3" type="audio/mpeg" />
-      </audio>
-      
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
       <motion.div
         className="relative"
         onHoverStart={() => setIsExpanded(true)}
@@ -64,8 +45,6 @@ const BottomNavBar = () => {
               transition={{ duration: 0.3, ease: "backOut" }}
               className="w-16 h-16 rounded-full cursor-pointer relative overflow-hidden"
               style={{
-                transform: "translateZ(0)", // Prevent jumping
-                willChange: "transform",
                 background:
                   "linear-gradient(135deg, #8B4513 0%, #D97706 50%, #B45309 100%)",
                 boxShadow: `
@@ -97,9 +76,6 @@ const BottomNavBar = () => {
                   repeat: Infinity,
                   repeatDelay: 2,
                   ease: "easeInOut",
-                }}
-                style={{
-                  transform: "translateZ(0)", // Prevent jumping
                 }}
               >
                 <HomeIcon className="w-8 h-8 text-white drop-shadow-lg" />
@@ -176,10 +152,7 @@ const BottomNavBar = () => {
                       duration: 0.4,
                       ease: [0.68, -0.55, 0.265, 1.55],
                     }}
-                    onClick={() => {
-                      setActiveItem(item.id);
-                      playClickSound();
-                    }}
+                    onClick={() => setActiveItem(item.id)}
                     className="relative group"
                   >
                     {/* Button Container */}
@@ -263,8 +236,7 @@ const BottomNavBar = () => {
           )}
         </AnimatePresence>
       </motion.div>
-      </div>
-    </>
+    </div>
   );
 };
 

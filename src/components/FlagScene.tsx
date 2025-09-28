@@ -184,7 +184,6 @@ export type FlagSceneProps = {
   };
   windPinStart?: number;
   withPole?: boolean;
-  disableControls?: boolean;
 };
 
 // Flag Mesh Component
@@ -305,7 +304,6 @@ export default function FlagScene({
   waves = {},
   windPinStart = 0.15,
   withPole = true,
-  disableControls = false,
 }: FlagSceneProps) {
   return (
     <div className="w-full h-full">
@@ -343,58 +341,38 @@ export default function FlagScene({
         {/* Environment */}
         <Environment preset="sunset" />
 
-        {/* Interactive Controls - Disabled when disableControls is true */}
-        {!disableControls ? (
-          <PresentationControls
-            enabled={true}
-            global={false}
-            cursor={true}
-            snap={false}
-            speed={1}
-            zoom={1}
-            rotation={[-0.3, 0.2, 0.05]} // Initial tilt like in the image
-            polar={[-Math.PI / 6, Math.PI / 6]}
-            azimuth={[-Math.PI / 4, Math.PI / 4]}
-          >
-            {/* Floating Animation with Tilt Effect */}
-            <Float speed={0.5} rotationIntensity={0.1} floatIntensity={0.05}>
-              <group 
-                position={[0.1, 0, 0]}
-                rotation={[-0.3, 0.2, 0.05]} // Stronger tilt like in the image
-              >
-                {/* Flag */}
-                <FlagMesh
-                  textureUrl={textureUrl}
-                  flagSize={flagSize}
-                  segments={segments}
-                  waves={waves}
-                  windPinStart={windPinStart}
-                />
+        {/* Interactive Controls */}
+        <PresentationControls
+          enabled={true}
+          global={false}
+          cursor={true}
+          snap={false}
+          speed={1}
+          zoom={1}
+          rotation={[0, 0, 0]}
+          polar={[-Math.PI / 6, Math.PI / 6]}
+          azimuth={[-Math.PI / 4, Math.PI / 4]}
+        >
+          {/* Floating Animation with Tilt Effect */}
+          <Float speed={0.5} rotationIntensity={0.1} floatIntensity={0.05}>
+            <group 
+              position={[0.1, 0, 0]}
+              rotation={[-0.1, 0.05, 0]} // Initial tilt like in the image
+            >
+              {/* Flag */}
+              <FlagMesh
+                textureUrl={textureUrl}
+                flagSize={flagSize}
+                segments={segments}
+                waves={waves}
+                windPinStart={windPinStart}
+              />
 
-                {/* Flag Pole */}
-                {withPole && <FlagPole height={flagSize[1]} />}
-              </group>
-            </Float>
-          </PresentationControls>
-        ) : (
-          /* Static Flag - No Controls */
-          <group 
-            position={[0.1, 0, 0]}
-            rotation={[-0.3, 0.2, 0.05]} // Fixed tilt
-          >
-            {/* Flag */}
-            <FlagMesh
-              textureUrl={textureUrl}
-              flagSize={flagSize}
-              segments={segments}
-              waves={waves}
-              windPinStart={windPinStart}
-            />
-
-            {/* Flag Pole */}
-            {withPole && <FlagPole height={flagSize[1]} />}
-          </group>
-        )}
+              {/* Flag Pole */}
+              {withPole && <FlagPole height={flagSize[1]} />}
+            </group>
+          </Float>
+        </PresentationControls>
       </Canvas>
     </div>
   );

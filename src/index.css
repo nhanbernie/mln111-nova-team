@@ -282,6 +282,7 @@ html {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -363,4 +364,27 @@ html {
   -moz-user-select: none !important;
   -ms-user-select: none !important;
   touch-action: none !important;
+}
+
+.px-12vw {
+  padding-left: 12vw;
+  padding-right: 12vw;
+}
+
+.px-6vw {
+  padding-left: 6vw;
+  padding-right: 6vw;
+}
+
+.min-w-777px {
+  min-width: 777px;
+}
+
+.min-w-60vw {
+  min-width: 60vw;
+}
+
+/* Active state for image wrappers */
+.image_wrapper.active {
+  opacity: 1 !important;
 }
