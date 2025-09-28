@@ -12,6 +12,7 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
   const [answers, setAnswers] = useState<number[]>([]);
   const [isAnswered, setIsAnswered] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const resultAudioRef = useRef<HTMLAudioElement>(null);
 
   const question = quizQuestions[currentQuestion];
   const progress = ((currentQuestion + 1) / QUIZ_CONFIG.totalQuestions) * 100;
@@ -25,11 +26,22 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
     }
   };
 
+  const playResultSound = (isCorrect: boolean) => {
+    if (resultAudioRef.current) {
+      // Change audio source based on result
+      resultAudioRef.current.src = isCorrect ? "/greate.mp3" : "/huhu.mp3";
+      resultAudioRef.current.currentTime = 0;
+      resultAudioRef.current.play().catch(() => {
+        console.log("Result audio play failed");
+      });
+    }
+  };
+
   const handleAnswerSelect = (answerIndex: number) => {
     playClickSound();
     setSelectedAnswer(answerIndex);
     setIsAnswered(true);
-    // Không hiển thị đáp án ngay, chỉ khi hoàn thành quiz
+    // Không phát âm thanh kết quả ngay, chỉ khi hoàn thành quiz
   };
 
   const handleNext = () => {
@@ -41,10 +53,17 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
       setSelectedAnswer(null);
       setIsAnswered(false);
     } else {
-      // Quiz completed
+      // Quiz completed - play result sound based on score
       const score = newAnswers.filter((answer, index) => 
         answer === quizQuestions[index].correctAnswer
       ).length;
+      const percentage = (score / QUIZ_CONFIG.totalQuestions) * 100;
+      
+      // Play result sound based on performance
+      setTimeout(() => {
+        playResultSound(percentage >= 70);
+      }, 1000);
+      
       onComplete(score, QUIZ_CONFIG.totalQuestions, newAnswers);
     }
   };
@@ -52,16 +71,20 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
   const handlePrevious = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1);
-      setSelectedAnswer(answers[currentQuestion - 1] || null);
-      setIsAnswered(true);
+      const previousAnswer = answers[currentQuestion - 1];
+      setSelectedAnswer(previousAnswer !== undefined ? previousAnswer : null);
+      setIsAnswered(previousAnswer !== undefined);
     }
   };
 
   return (
     <div className="min-h-screen relative overflow-hidden z-50">
-      {/* Audio element */}
+      {/* Audio elements */}
       <audio ref={audioRef} preload="auto">
         <source src="/laptop-touchpad-click.mp3" type="audio/mpeg" />
+      </audio>
+      <audio ref={resultAudioRef} preload="auto">
+        <source src="/greate.mp3" type="audio/mpeg" />
       </audio>
       
       {/* Background with existing design */}
@@ -221,27 +244,196 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {question.options.map((option, index) => {
                 const isSelected = selectedAnswer === index;
+                const isCorrect = index === question.correctAnswer;
+                const showAnswer = isAnswered;
                 
                 return (
                   <motion.button
                     key={index}
-                    className={`p-6 rounded-2xl text-left transition-all duration-300 ${
-                      isSelected
+                    className={`p-6 rounded-2xl text-left transition-all duration-300 relative ${
+                      showAnswer
+                        ? isCorrect
+                          ? 'bg-gradient-to-r from-green-500/30 to-emerald-500/30 border-2 border-green-400 text-white shadow-lg'
+                          : isSelected
+                          ? 'bg-gradient-to-r from-red-500/30 to-rose-500/30 border-2 border-red-400 text-white shadow-lg'
+                          : 'bg-white/10 border border-white/20 text-white'
+                        : isSelected
                         ? 'bg-gradient-to-r from-[#8B4513]/20 to-[#D97706]/20 border-2 border-[#D97706] text-white shadow-lg'
                         : 'bg-white/10 hover:bg-white/20 border border-white/20 text-white'
                     }`}
-                    onClick={() => handleAnswerSelect(index)}
+                    onClick={() => !showAnswer && handleAnswerSelect(index)}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={!showAnswer ? { scale: 1.02 } : {}}
+                    whileTap={!showAnswer ? { scale: 0.98 } : {}}
+                    disabled={showAnswer}
                   >
                     <div className="text-lg font-medium">{option}</div>
+                    
+                    {/* Answer indicators - Smooth Animation */}
+                    {showAnswer && (
+                      <motion.div
+                        className="absolute top-4 right-4"
+                        initial={{ scale: 0, rotate: -180, opacity: 0 }}
+                        animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                        transition={{ 
+                          delay: 0.4, 
+                          duration: 0.6, 
+                          type: "spring", 
+                          stiffness: 150,
+                          damping: 12
+                        }}
+                      >
+                        {isCorrect ? (
+                          <motion.div 
+                            className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shadow-lg"
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <motion.span 
+                              className="text-white text-xl"
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 0.6, duration: 0.3 }}
+                            >
+                              ✓
+                            </motion.span>
+                          </motion.div>
+                        ) : isSelected ? (
+                          <motion.div 
+                            className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center shadow-lg"
+                            whileHover={{ scale: 1.1, rotate: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <motion.span 
+                              className="text-white text-xl"
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 0.6, duration: 0.3 }}
+                            >
+                              ✗
+                            </motion.span>
+                          </motion.div>
+                        ) : null}
+                      </motion.div>
+                    )}
                   </motion.button>
                 );
               })}
             </div>
+
+            {/* Answer Result Display - Smooth Animation */}
+            {isAnswered && (
+              <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.9, rotateX: -10 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                transition={{ 
+                  delay: 0.3, 
+                  duration: 0.8, 
+                  type: "spring", 
+                  stiffness: 100,
+                  damping: 15
+                }}
+                className={`mt-6 p-6 rounded-2xl border-2 overflow-hidden ${
+                  selectedAnswer === question.correctAnswer
+                    ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-400'
+                    : 'bg-gradient-to-r from-red-500/20 to-rose-500/20 border-red-400'
+                }`}
+              >
+                {/* Background glow effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                />
+                
+                <div className="flex items-center gap-4 relative z-10">
+                  <motion.div
+                    className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg ${
+                      selectedAnswer === question.correctAnswer
+                        ? 'bg-green-500'
+                        : 'bg-red-500'
+                    }`}
+                    initial={{ scale: 0, rotate: -180, opacity: 0 }}
+                    animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                    transition={{ 
+                      delay: 0.6, 
+                      duration: 0.6, 
+                      type: "spring", 
+                      stiffness: 150,
+                      damping: 10
+                    }}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
+                    <motion.span 
+                      className="text-white text-2xl"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.8, duration: 0.3 }}
+                    >
+                      {selectedAnswer === question.correctAnswer ? '✓' : '✗'}
+                    </motion.span>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.7, duration: 0.5 }}
+                  >
+                    <motion.h3 
+                      className={`text-xl font-bold font-dancing-script ${
+                        selectedAnswer === question.correctAnswer ? 'text-green-300' : 'text-red-300'
+                      }`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8, duration: 0.4 }}
+                    >
+                      {selectedAnswer === question.correctAnswer ? 'Chính xác!' : 'Sai rồi!'}
+                    </motion.h3>
+                    <motion.p 
+                      className="text-white/80 text-lg font-dancing-script"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.9, duration: 0.4 }}
+                    >
+                      {selectedAnswer === question.correctAnswer 
+                        ? 'Bạn đã trả lời đúng câu hỏi này.' 
+                        : `Đáp án đúng là: ${question.options[question.correctAnswer]}`
+                      }
+                    </motion.p>
+                  </motion.div>
+                </div>
+                
+                {/* Floating particles effect */}
+                {selectedAnswer === question.correctAnswer && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    {[...Array(6)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 bg-green-400 rounded-full"
+                        style={{
+                          left: `${20 + i * 15}%`,
+                          top: `${30 + (i % 2) * 40}%`
+                        }}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ 
+                          opacity: [0, 1, 0],
+                          scale: [0, 1, 0],
+                          y: [0, -30, -60]
+                        }}
+                        transition={{
+                          delay: 1 + i * 0.1,
+                          duration: 1.5,
+                          ease: "easeOut"
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            )}
 
             {/* Navigation Buttons - Always visible */}
             <div className="flex justify-between items-center mt-8">

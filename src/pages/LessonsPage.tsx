@@ -15,7 +15,7 @@ export default function LessonsPage() {
         <p className="text-xl text-white/90 leading-relaxed drop-shadow-md font-dancing-script">
           Khám phá những bài học bổ ích và kiến thức mới.
         </p>
-      </div>
+      </div>  
     </motion.div>
   );
 }
