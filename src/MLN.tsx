@@ -1,17 +1,22 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./components/LoadingScreen";
-import AnimatedTitle from "./components/AnimatedTitle";
 import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
 import SmokeEffect from "./components/SmokeEffect";
-import ScrollSections from "./components/ScrollSections";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import TeamPage from "./pages/TeamPage";
+import ContactPage from "./pages/ContactPage";
+import ProjectsPage from "./pages/ProjectsPage";
 
 function MLN() {
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const location = useLocation();
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -63,27 +68,20 @@ function MLN() {
       {/* Loading Screen */}
       <AnimatePresence>{isLoading && <LoadingScreen />}</AnimatePresence>
 
-      {/* Main Content */}
-      <AnimatePresence>
+      {/* Main Content with Router */}
+      <AnimatePresence mode="wait">
         {showContent && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="relative z-10 flex items-center justify-center min-h-screen p-8"
-          >
-            <div className="max-w-7xl mx-auto text-center">
-              {/* Animated Title */}
-              <AnimatedTitle />
-            </div>
-          </motion.div>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/team" element={<TeamPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+          </Routes>
         )}
       </AnimatePresence>
-
-      {/* Floating 3D Flags */}
-      {/* {showContent && <FloatingFlags />} */}
       {showContent && <SmokeEffect />}
-      {showContent && <ScrollSections />}
+
       {/* Bottom Navigation Bar */}
       {showContent && <BottomNavBar />}
     </div>
