@@ -14,6 +14,8 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
   const [showDetails, setShowDetails] = useState(false);
   const percentage = Math.round((score / total) * 100);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const resultsCardRef = useRef<HTMLDivElement>(null);
+  const scoreNumbersRef = useRef<HTMLDivElement[]>([]);
   // const isPassed = percentage >= QUIZ_CONFIG.passingScore;
 
   useEffect(() => {
@@ -32,10 +34,9 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
       playResultSound();
     }, 1000);
 
-    // GSAP entrance animation - Check if elements exist
-    const resultsCard = document.querySelector(".results-card");
-    if (resultsCard) {
-      gsap.fromTo(resultsCard, 
+    // GSAP entrance animation using useRef
+    if (resultsCardRef.current) {
+      gsap.fromTo(resultsCardRef.current, 
         { 
           opacity: 0, 
           scale: 0.8, 
@@ -53,8 +54,8 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
       );
     }
 
-    // Animate score counter - Check if elements exist
-    const scoreNumbers = document.querySelectorAll(".score-number");
+    // Animate score counter using useRef
+    const scoreNumbers = scoreNumbersRef.current.filter(Boolean);
     if (scoreNumbers.length > 0) {
       gsap.fromTo(scoreNumbers, 
         { scale: 0 },
@@ -62,8 +63,9 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
           scale: 1,
           duration: 0.8,
           ease: "back.out(1.7)",
-        delay: 0.5
-      });
+          delay: 0.5
+        }
+      );
     }
 
     return () => {
@@ -112,6 +114,7 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
       <div className="relative z-[60] min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-6xl">
           <motion.div
+            ref={resultsCardRef}
             className="results-card bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -128,6 +131,9 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
               </motion.h1>
               
               <motion.div 
+                ref={(el) => {
+                  if (el) scoreNumbersRef.current[0] = el;
+                }}
                 className={`text-8xl font-bold score-number ${getScoreColor()}`}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

@@ -28,20 +28,13 @@ export default function LessonsPage() {
       );
     }
 
-    // Sections animation - Optimized with Lenis
+    // Optimized animation using GSAP Timeline
     const sectionElements = sectionRefs.current.filter(Boolean);
     
-    sectionElements.forEach((section, index) => {
+    sectionElements.forEach((section) => {
       if (section) {
-        gsap.fromTo(section, {
-          opacity: 0,
-          y: 10
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          delay: index * 0.03,
-          ease: "power1.out",
+        // Create timeline for each section
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: "top 95%",
@@ -51,12 +44,22 @@ export default function LessonsPage() {
             refreshPriority: -1,
             // Lenis integration
             onUpdate: (self) => {
-              // Smooth scroll integration
               if (self.progress > 0.1) {
                 section.style.willChange = 'auto';
               }
             }
           }
+        });
+
+        // Add animation to timeline
+        tl.fromTo(section, {
+          opacity: 0,
+          y: 10
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power1.out"
         });
       }
     });

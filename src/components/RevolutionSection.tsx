@@ -28,25 +28,29 @@ export default function RevolutionSection() {
     // Sections animation
     const sectionElements = sectionRefs.current.filter(Boolean);
     
-    sectionElements.forEach((section, index) => {
+    sectionElements.forEach((section) => {
       if (section) {
-        gsap.fromTo(section, {
+        // Create timeline for each section
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 95%",
+            end: "bottom 5%",
+            toggleActions: "play none none reverse",
+            fastScrollEnd: true,
+            refreshPriority: -1
+          }
+        });
+
+        // Add animation to timeline
+        tl.fromTo(section, {
           opacity: 0,
-          y: 10 // Further reduced movement
+          y: 10
         }, {
           opacity: 1,
           y: 0,
-          duration: 0.5, // Much reduced duration
-          delay: index * 0.03, // Much reduced stagger
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 95%", // Later trigger for better performance
-            end: "bottom 5%",
-            toggleActions: "play none none reverse",
-            fastScrollEnd: true, // Performance optimization
-            refreshPriority: -1 // Lower priority
-          }
+          duration: 0.5,
+          ease: "power1.out"
         });
       }
     });

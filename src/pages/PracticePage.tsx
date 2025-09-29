@@ -33,21 +33,13 @@ export default function PracticePage() {
       );
     }
 
-    // Sections animation with enhanced effects
+    // Optimized animation using GSAP Timeline
     const cardElements = cardRefs.current.filter(Boolean);
     
-    cardElements.forEach((card, index) => {
+    cardElements.forEach((card) => {
       if (card) {
-        // Simplified entrance animation
-        gsap.fromTo(card, {
-          opacity: 0,
-          y: 20
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          delay: index * 0.05,
-          ease: "power1.out",
+        // Create timeline for each card
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: card,
             start: "top 90%",
@@ -57,28 +49,28 @@ export default function PracticePage() {
           }
         });
 
-        // Disabled parallax for better performance
-        // gsap.to(card, { ... });
+        // Add all animations to timeline
+        tl.fromTo(card, {
+          opacity: 0,
+          y: 20
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power1.out"
+        });
 
-        // Content reveal animation - Simplified
+        // Content reveal animation in same timeline
         const contentElements = card.querySelectorAll('.content-reveal');
         if (contentElements.length > 0) {
-          gsap.fromTo(contentElements, {
+          tl.fromTo(contentElements, {
             opacity: 0
           }, {
             opacity: 1,
             duration: 0.4,
             stagger: 0.02,
-            delay: 0.1,
-            ease: "power1.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-              end: "bottom 10%",
-              toggleActions: "play none none reverse",
-              fastScrollEnd: true
-            }
-          });
+            ease: "power1.out"
+          }, "-=0.2"); // Start 0.2s before previous animation ends
         }
       }
     });
