@@ -134,7 +134,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                 <div className="w-16 h-16 mx-auto mb-4 bg-red-500/20 rounded-full flex items-center justify-center">
                   <CpuChipIcon className="w-8 h-8 text-red-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-red-400 mb-4 font-dancing-script">API chưa được cấu hình</h3>
+                <h3 className="text-2xl font-bold text-red-400 mb-4 font-xarrovv">API chưa được cấu hình</h3>
                 <p className="text-red-300 mb-4">
                   Vui lòng thêm VITE_OPENROUTER_API_KEY vào file .env
                 </p>
@@ -189,7 +189,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                     <SparklesIcon className={`text-white ${isExpanded ? 'w-6 h-6' : 'w-4 h-4'}`} />
                   </div>
                   <div>
-                    <h1 className={`font-bold text-white font-dancing-script ${
+                    <h1 className={`font-bold text-white font-xarrovv ${
                       isExpanded ? 'text-2xl' : 'text-lg'
                     }`}>AI Assistant</h1>
                     {isExpanded && (
@@ -242,7 +242,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                     }`}>
                       <ChatBubbleLeftRightIcon className={`${isExpanded ? 'w-10 h-10' : 'w-6 h-6'}`} />
                     </div>
-                    <h2 className={`font-dancing-script mb-2 ${
+                    <h2 className={`font-xarrovv mb-2 ${
                       isExpanded ? 'text-xl' : 'text-sm'
                     }`}>Chào mừng!</h2>
                     {isExpanded && (

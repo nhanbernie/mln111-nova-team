@@ -129,7 +129,7 @@ export default function ScrollSections({
           style={{ willChange: 'transform' }}
         >
           <div className="min-w-777px px-6vw">
-            <h1 className="m-0 font-dancing-script text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold leading-tight text-white drop-shadow-lg">
+            <h1 className="m-0 font-xarrovv text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold leading-tight text-white drop-shadow-lg">
               Nova team
             </h1>
           </div>

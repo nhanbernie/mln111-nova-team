@@ -237,7 +237,7 @@ const AnimatedTitle = () => {
           transition={{ delay: 2.8, duration: 0.6, ease: "backOut" }}
           className="absolute -top-4 -left-8 text-4xl opacity-30"
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Open Sans', serif",
             color: "#D97706",
             fontWeight: "bold",
           }}
@@ -264,7 +264,7 @@ const AnimatedTitle = () => {
           transition={{ delay: 3, duration: 0.6, ease: "backOut" }}
           className="absolute -bottom-4 -right-8 text-4xl opacity-30"
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Open Sans', serif",
             color: "#D97706",
             fontWeight: "bold",
           }}

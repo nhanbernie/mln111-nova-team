@@ -143,7 +143,7 @@ export default function AIPage() {
                 AI Usage
               </motion.h1>
             </motion.div>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-dancing-script">
+            <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-xarrovv">
               Minh bạch về việc sử dụng AI trong dự án học tập, đảm bảo tính trách nhiệm và liêm chính học thuật
             </p>
           </motion.div>
@@ -159,7 +159,7 @@ export default function AIPage() {
               <motion.button
                 key={section.id}
                 onClick={() => setActiveSection(index)}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 font-dancing-script ${
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 font-xarrovv ${
                   activeSection === index
                     ? 'bg-white/20 text-white shadow-lg'
                     : 'bg-white/10 text-white/70 hover:bg-white/15'
@@ -207,7 +207,7 @@ export default function AIPage() {
                   return <IconComponent className="w-8 h-8 text-white" />;
                 })()}
               </div>
-              <h2 className="text-3xl font-bold text-white font-dancing-script">
+              <h2 className="text-3xl font-bold text-white font-xarrovv">
                 {sections[activeSection].title}
               </h2>
             </div>
@@ -216,7 +216,7 @@ export default function AIPage() {
             {activeSection === 0 && sections[0].content && (
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2 font-dancing-script">
+                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2 font-xarrovv">
                     <DocumentTextIcon className="w-6 h-6" />
                     Công cụ sử dụng
                   </h3>
@@ -236,14 +236,14 @@ export default function AIPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 font-dancing-script">Mục đích</h3>
-                  <p className="text-white/90 leading-relaxed font-dancing-script">
+                  <h3 className="text-xl font-semibold text-white mb-4 font-xarrovv">Mục đích</h3>
+                  <p className="text-white/90 leading-relaxed font-xarrovv">
                     {sections[0].content.purpose}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 font-dancing-script">Kết quả AI</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4 font-xarrovv">Kết quả AI</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {sections[0].content.results?.map((result, index) => (
                       <motion.div
@@ -261,7 +261,7 @@ export default function AIPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 font-dancing-script">Chỉnh sửa của sinh viên</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4 font-xarrovv">Chỉnh sửa của sinh viên</h3>
                   <div className="space-y-3">
                     {sections[0].content.edits?.map((edit, index) => (
                       <motion.div
@@ -283,7 +283,7 @@ export default function AIPage() {
             {activeSection === 1 && sections[1].content && (
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 font-dancing-script">Kiểm chứng thông tin</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4 font-xarrovv">Kiểm chứng thông tin</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {sections[1].content.verification?.map((source, index) => (
                       <motion.div
@@ -301,8 +301,8 @@ export default function AIPage() {
                 </div>
 
                 <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-6 border border-green-400/30">
-                  <h3 className="text-xl font-semibold text-white mb-3 font-dancing-script">Trách nhiệm</h3>
-                  <p className="text-white/90 leading-relaxed font-dancing-script">
+                  <h3 className="text-xl font-semibold text-white mb-3 font-xarrovv">Trách nhiệm</h3>
+                  <p className="text-white/90 leading-relaxed font-xarrovv">
                     {sections[1].content.responsibility}
                   </p>
                 </div>
@@ -312,7 +312,7 @@ export default function AIPage() {
             {activeSection === 2 && sections[2].content && (
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 font-dancing-script">Vai trò của AI</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4 font-xarrovv">Vai trò của AI</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {sections[2].content.aiRole?.map((role, index) => (
                       <motion.div
@@ -330,8 +330,8 @@ export default function AIPage() {
                 </div>
 
                 <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-400/30">
-                  <h3 className="text-xl font-semibold text-white mb-3 font-dancing-script">Công việc của sinh viên</h3>
-                  <p className="text-white/90 leading-relaxed font-dancing-script">
+                  <h3 className="text-xl font-semibold text-white mb-3 font-xarrovv">Công việc của sinh viên</h3>
+                  <p className="text-white/90 leading-relaxed font-xarrovv">
                     {sections[2].content.studentWork}
                   </p>
                 </div>
@@ -341,14 +341,14 @@ export default function AIPage() {
             {activeSection === 3 && sections[3].content && (
               <div className="space-y-8">
                 <div className="bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-xl p-6 border border-orange-400/30">
-                  <h3 className="text-xl font-semibold text-white mb-3 font-dancing-script">Cam kết</h3>
-                  <p className="text-white/90 leading-relaxed font-dancing-script">
+                  <h3 className="text-xl font-semibold text-white mb-3 font-xarrovv">Cam kết</h3>
+                  <p className="text-white/90 leading-relaxed font-xarrovv">
                     {sections[3].content.commitment}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 font-dancing-script">Nguồn tài liệu chính thống</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4 font-xarrovv">Nguồn tài liệu chính thống</h3>
                   <div className="space-y-3">
                     {sections[3].content.sources?.map((source, index) => (
                       <motion.div

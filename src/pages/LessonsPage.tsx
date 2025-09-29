@@ -107,7 +107,7 @@ export default function LessonsPage() {
       >
         <div className="text-center max-w-6xl mx-auto px-8">
           <motion.h1
-            className="text-7xl md:text-9xl font-bold mb-8 font-dancing-script"
+            className="text-7xl md:text-9xl font-bold mb-8 font-xarrovv"
             animate={{
               textShadow: [
                 "0 0 20px rgba(255, 255, 255, 0.3)",
@@ -126,7 +126,7 @@ export default function LessonsPage() {
             CHƯƠNG 3
           </motion.h1>
           <motion.h2
-            className="text-4xl md:text-6xl font-bold mb-6 p-2 font-dancing-script"
+            className="text-4xl md:text-6xl font-bold mb-6 p-2 font-xarrovv"
             style={{
               background: "linear-gradient(135deg, #f59e0b, #d97706, #b45309)",
               backgroundClip: "text",
@@ -137,7 +137,7 @@ export default function LessonsPage() {
             NHÀ NƯỚC VÀ CÁCH MẠNG XÃ HỘI
           </motion.h2>
           <motion.p
-            className="text-2xl text-white/90 font-dancing-script"
+            className="text-2xl text-white/90 font-xarrovv"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
@@ -161,7 +161,7 @@ export default function LessonsPage() {
             <div className="text-center mb-16">
               <div className="text-center mb-8">
                 <motion.h2 
-                  className="text-7xl md:text-9xl font-bold font-dancing-script text-gray-800"
+                  className="text-7xl md:text-9xl font-bold font-xarrovv text-gray-800"
                   animate={{
                     scale: [1, 1.02, 1]
                   }}
@@ -196,7 +196,7 @@ export default function LessonsPage() {
               >
                 <div className="mb-6">
                   <motion.h3 
-                    className="text-3xl font-bold text-gray-800 font-dancing-script"
+                    className="text-3xl font-bold text-gray-800 font-xarrovv"
                     animate={{
                       scale: [1, 1.02, 1]
                     }}
@@ -263,7 +263,7 @@ export default function LessonsPage() {
               >
                 <div className="mb-6">
                   <motion.h3 
-                    className="text-3xl font-bold text-gray-800 font-dancing-script"
+                    className="text-3xl font-bold text-gray-800 font-xarrovv"
                     animate={{
                       scale: [1, 1.02, 1]
                     }}
@@ -314,7 +314,7 @@ export default function LessonsPage() {
             <div className="text-center mb-16">
               <div className="text-center mb-8">
                 <motion.h2 
-                  className="text-6xl font-bold font-dancing-script text-gray-800"
+                  className="text-6xl font-bold font-xarrovv text-gray-800"
                   animate={{
                     scale: [1, 1.02, 1]
                   }}
@@ -483,7 +483,7 @@ export default function LessonsPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <div className="text-center mb-8">
-                <h2 className="text-6xl font-bold text-gray-800 font-dancing-script">
+                <h2 className="text-6xl font-bold text-gray-800 font-xarrovv">
                   d. Chức năng cơ bản
                 </h2>
               </div>
@@ -511,7 +511,7 @@ export default function LessonsPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-slate-600 to-slate-700 flex items-center justify-center">
                     <ShieldCheckIcon className="w-6 h-6 text-slate-100" />
                   </div>
-                    <h3 className="text-2xl font-bold text-white font-dancing-script">Chính trị</h3>
+                    <h3 className="text-2xl font-bold text-white font-xarrovv">Chính trị</h3>
                 </div>
                 <p className="text-white/90 leading-relaxed">
                   Duy trì sự thống trị giai cấp, ổn định chính trị, bảo vệ lợi ích giai cấp cầm quyền.
@@ -538,7 +538,7 @@ export default function LessonsPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 flex items-center justify-center">
                     <HeartIcon className="w-6 h-6 text-emerald-100" />
                   </div>
-                  <h3 className="text-2xl font-bold text-green-100 font-dancing-script">Xã hội</h3>
+                  <h3 className="text-2xl font-bold text-green-100 font-xarrovv">Xã hội</h3>
                 </div>
                 <p className="text-white/90 leading-relaxed">
                   Củng cố và thúc đẩy xã hội phát triển, định hướng chính trị, ban hành luật pháp, phát triển văn hóa – y tế – giáo dục.
@@ -565,7 +565,7 @@ export default function LessonsPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center">
                     <BuildingOfficeIcon className="w-6 h-6 text-blue-100" />
                   </div>
-                  <h3 className="text-2xl font-bold text-blue-100 font-dancing-script">Đối nội</h3>
+                  <h3 className="text-2xl font-bold text-blue-100 font-xarrovv">Đối nội</h3>
                 </div>
                 <p className="text-white/90 leading-relaxed">
                   Giữ trật tự xã hội, quản lý kinh tế – xã hội.
@@ -592,7 +592,7 @@ export default function LessonsPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-600 to-indigo-700 flex items-center justify-center">
                     <GlobeAltIcon className="w-6 h-6 text-indigo-100" />
                   </div>
-                  <h3 className="text-2xl font-bold text-indigo-100 font-dancing-script">Đối ngoại</h3>
+                  <h3 className="text-2xl font-bold text-indigo-100 font-xarrovv">Đối ngoại</h3>
                 </div>
                 <p className="text-white/90 leading-relaxed">
                   Bảo vệ lãnh thổ, giao lưu kinh tế – văn hóa – khoa học với các quốc gia khác.
@@ -613,7 +613,7 @@ export default function LessonsPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <div className="text-center mb-8">
-                <h2 className="text-6xl font-bold text-gray-800 font-dancing-script">
+                <h2 className="text-6xl font-bold text-gray-800 font-xarrovv">
                   e. Các kiểu và hình thức nhà nước
                 </h2>
               </div>
@@ -637,7 +637,7 @@ export default function LessonsPage() {
             }}
             transition={{ duration: 0.4 }}
               >
-                <h3 className="text-3xl font-bold text-amber-100 mb-6 font-dancing-script">Kiểu nhà nước</h3>
+                <h3 className="text-3xl font-bold text-amber-100 mb-6 font-xarrovv">Kiểu nhà nước</h3>
                 <p className="text-white/90 leading-relaxed mb-6">
                   Dùng để chỉ quyền lực nhà nước đó thuộc về giai cấp nào, tồn tại trên cơ sở kinh tế nào tương ứng với HTKT-XH nào.
                 </p>
@@ -675,7 +675,7 @@ export default function LessonsPage() {
             }}
             transition={{ duration: 0.4 }}
               >
-                <h3 className="text-3xl font-bold text-amber-100 mb-6 font-dancing-script">Hình thức nhà nước</h3>
+                <h3 className="text-3xl font-bold text-amber-100 mb-6 font-xarrovv">Hình thức nhà nước</h3>
                 <p className="text-white/90 leading-relaxed mb-6">
                   Cách tổ chức, phương thức thực hiện quyền lực nhà nước của giai cấp thống trị.
                 </p>
@@ -724,7 +724,7 @@ export default function LessonsPage() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <div className="text-center mb-8">
-                <h2 className="text-6xl font-bold text-gray-800 font-dancing-script">
+                <h2 className="text-6xl font-bold text-gray-800 font-xarrovv">
                   Ví dụ lịch sử
                 </h2>
               </div>
@@ -752,7 +752,7 @@ export default function LessonsPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center">
                     <ShieldCheckIcon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-red-100 font-dancing-script">Cách mạng Tháng Mười Nga (1917)</h3>
+                  <h3 className="text-2xl font-bold text-red-100 font-xarrovv">Cách mạng Tháng Mười Nga (1917)</h3>
                 </div>
                 
                 <p className="text-white/90 leading-relaxed mb-6">
@@ -808,7 +808,7 @@ export default function LessonsPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 flex items-center justify-center">
                     <GlobeAltIcon className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-emerald-100 font-dancing-script">Cách mạng Tháng Tám (1945)</h3>
+                  <h3 className="text-2xl font-bold text-emerald-100 font-xarrovv">Cách mạng Tháng Tám (1945)</h3>
                 </div>
                 
                 <p className="text-white/90 leading-relaxed mb-6">
@@ -938,7 +938,7 @@ export default function LessonsPage() {
             className="mb-12"
           >
             <motion.h1
-              className="text-6xl md:text-8xl font-bold mb-6 font-dancing-script"
+              className="text-6xl md:text-8xl font-bold mb-6 font-xarrovv"
               animate={{
                 textShadow: [
                   "0 0 20px rgba(255, 255, 255, 0.3)",
@@ -962,7 +962,7 @@ export default function LessonsPage() {
             </motion.h1>
             
             <motion.p
-              className="text-2xl md:text-3xl text-white/90 font-dancing-script mb-8"
+              className="text-2xl md:text-3xl text-white/90 font-xarrovv mb-8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
@@ -1011,7 +1011,7 @@ export default function LessonsPage() {
                 }}
               >
                 <div className="text-6xl mb-4">{item.icon}</div>
-                <h3 className="text-2xl font-bold text-white mb-4 font-dancing-script">
+                <h3 className="text-2xl font-bold text-white mb-4 font-xarrovv">
                   {item.title}
                 </h3>
                 <p className="text-white/90 leading-relaxed">
@@ -1030,7 +1030,7 @@ export default function LessonsPage() {
             className="bg-gradient-to-r from-white/10 to-white/5 rounded-3xl p-12 border border-white/20 backdrop-blur-sm shadow-lg"
           >
             <motion.h2
-              className="text-4xl md:text-5xl font-bold text-white mb-6 font-dancing-script"
+              className="text-4xl md:text-5xl font-bold text-white mb-6 font-xarrovv"
               animate={{
                 scale: [1, 1.02, 1]
               }}

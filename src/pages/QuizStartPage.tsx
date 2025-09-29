@@ -106,7 +106,7 @@ export default function QuizStartPage() {
             className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 shadow-2xl border border-white/20"
           >
             <motion.h1 
-              className="text-6xl font-bold text-white mb-8 drop-shadow-lg font-dancing-script"
+              className="text-6xl font-bold text-white mb-8 drop-shadow-lg font-xarrovv"
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -115,7 +115,7 @@ export default function QuizStartPage() {
             </motion.h1>
             
             <motion.p 
-              className="text-xl text-white/90 leading-relaxed drop-shadow-md mb-8 font-dancing-script"
+              className="text-xl text-white/90 leading-relaxed drop-shadow-md mb-8 font-xarrovv"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -129,19 +129,19 @@ export default function QuizStartPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
             >
-              <h2 className="text-2xl font-bold text-white mb-6 font-dancing-script">Thông tin Quiz</h2>
+              <h2 className="text-2xl font-bold text-white mb-6 font-xarrovv">Thông tin Quiz</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white/80">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2 font-dancing-script">10</div>
-                  <div className="text-sm font-dancing-script">Câu hỏi</div>
+                  <div className="text-4xl font-bold text-white mb-2 font-xarrovv">10</div>
+                  <div className="text-sm font-xarrovv">Câu hỏi</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2 font-dancing-script">30s</div>
-                  <div className="text-sm font-dancing-script">Mỗi câu</div>
+                  <div className="text-4xl font-bold text-white mb-2 font-xarrovv">30s</div>
+                  <div className="text-sm font-xarrovv">Mỗi câu</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-2 font-dancing-script">20p</div>
-                  <div className="text-sm font-dancing-script">Tổng thời gian</div>
+                  <div className="text-4xl font-bold text-white mb-2 font-xarrovv">20p</div>
+                  <div className="text-sm font-xarrovv">Tổng thời gian</div>
                 </div>
               </div>
             </motion.div>
@@ -156,7 +156,7 @@ export default function QuizStartPage() {
               <motion.button
                 onClick={handleAIGenerate}
                 disabled={isLoading || !isConfigured}
-                className={`bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden group font-dancing-script disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden group font-xarrovv disabled:opacity-50 disabled:cursor-not-allowed ${
                   !isConfigured ? 'cursor-not-allowed' : ''
                 }`}
                 whileHover={{ 
@@ -229,7 +229,7 @@ export default function QuizStartPage() {
 
             <motion.button
               onClick={startQuiz}
-              className="bg-gradient-to-r from-[#8B4513] to-[#D97706] text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl transition-all duration-300 hover:shadow-3xl relative overflow-hidden group font-dancing-script"
+              className="bg-gradient-to-r from-[#8B4513] to-[#D97706] text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl transition-all duration-300 hover:shadow-3xl relative overflow-hidden group font-xarrovv"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ 
                 opacity: 1, 
