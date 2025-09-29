@@ -41,6 +41,19 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
     clearError, 
     clearResponse 
   } = useAI();
+
+  // Prevent body scroll when popup is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
   
   const { isConfigured } = useAIConfig();
 
@@ -174,7 +187,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
             className={`fixed z-[300] bg-gradient-to-br from-[#8B4513]/70 to-[#D97706]/70 rounded-3xl shadow-2xl border border-white/20 flex flex-col overflow-hidden ${
               isExpanded 
                 ? 'inset-4' 
-                : 'bottom-24 left-6 w-96 h-[28rem]'
+                : 'bottom-24 left-24 w-[28rem] h-[32rem]'
             }`}
           >
             {/* Header */}
@@ -229,7 +242,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
             </div>
 
             {/* Messages Container */}
-            <div className={`flex-1 overflow-y-auto ${
+            <div className={`flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent ${
               isExpanded ? 'p-6' : 'p-3'
             }`}>
               <div className={`mx-auto ${isExpanded ? 'max-w-4xl' : 'max-w-full'}`}>
@@ -311,7 +324,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                                 : 'bg-gradient-to-r from-white/10 to-white/5 text-white border border-white/20'
                             }`}>
                               <p className={`leading-relaxed whitespace-pre-wrap ${
-                                isExpanded ? 'text-sm' : 'text-xs'
+                                isExpanded ? 'text-base' : 'text-sm'
                               }`}>{message.content}</p>
                               {isExpanded && (
                                 <p className="text-xs opacity-50 mt-1">
@@ -380,9 +393,9 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                       type="text"
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      placeholder={isExpanded ? "Nhập câu hỏi của bạn..." : "Hỏi AI..."}
+                      placeholder={isExpanded ? "Nhập câu hỏi của bạn..." : "Hãy đặt câu hỏi cho tớ nha..."}
                       className={`w-full bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 focus:border-transparent transition-all duration-300 ${
-                        isExpanded ? 'px-4 py-3' : 'px-3 py-2'
+                        isExpanded ? 'px-3 py-2' : 'px-2 py-1'
                       }`}
                       disabled={isLoading}
                     />
@@ -391,7 +404,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                     type="submit"
                     disabled={!input.trim() || isLoading}
                     className={`bg-gradient-to-r from-[#8B4513]/80 to-[#D97706]/80 text-white rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1 shadow-lg ${
-                      isExpanded ? 'px-6 py-3' : 'px-3 py-2'
+                      isExpanded ? 'px-8 py-3' : 'px-6 py-2'
                     }`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

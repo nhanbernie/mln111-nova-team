@@ -172,6 +172,25 @@ export default function QuizStartPage() {
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                     <span>Đang tạo câu hỏi AI...</span>
                   </div>
+                ) : useAIGenerated && aiQuestions.length > 0 ? (
+                  <motion.div 
+                    className="flex items-center gap-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <div>
+                      <span className="text-green-300 font-medium">
+                        Tạo thành công {aiQuestions.length} câu hỏi
+                      </span>
+                      {countdown > 0 && (
+                        <div className="text-green-200 text-xs mt-1">
+                          Chuyển trong {countdown}s...
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
                 ) : !isConfigured ? (
                   <div className="flex items-center gap-3">
                     <ExclamationTriangleIcon className="w-5 h-5" />
@@ -205,26 +224,6 @@ export default function QuizStartPage() {
               )}
               
               
-              {/* Success message */}
-              {useAIGenerated && aiQuestions.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 bg-green-500/20 border border-green-500/30 rounded-xl p-4"
-                >
-                  <div className="flex items-center gap-2">
-                    <CheckCircleIcon className="w-4 h-4 text-green-400" />
-                    <p className="text-green-300 text-sm">
-                      Đã tạo {aiQuestions.length} câu hỏi AI thành công!
-                    </p>
-                  </div>
-                  {countdown > 0 && (
-                    <p className="text-green-200 text-xs mt-2">
-                      Chuyển đến quiz trong {countdown} giây...
-                    </p>
-                  )}
-                </motion.div>
-              )}
             </motion.div>
 
             <motion.button
