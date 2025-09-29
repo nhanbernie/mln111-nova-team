@@ -171,7 +171,7 @@
   background-color: #f3ebdd;
 }
 
-/* Global yellow overlay */
+/* Global yellow overlay - Increased warmth */
 body::before {
   content: '';
   position: fixed;
@@ -181,11 +181,12 @@ body::before {
   height: 100%;
   background: linear-gradient(
     135deg,
-    rgba(255, 215, 0, 0.08) 0%,
-    rgba(255, 193, 7, 0.06) 25%,
-    rgba(255, 171, 0, 0.05) 50%,
-    rgba(255, 149, 0, 0.04) 75%,
-    rgba(255, 127, 0, 0.03) 100%
+    rgba(255, 215, 0, 0.15) 0%,
+    rgba(255, 193, 7, 0.12) 20%,
+    rgba(255, 171, 0, 0.10) 40%,
+    rgba(255, 149, 0, 0.08) 60%,
+    rgba(255, 127, 0, 0.06) 80%,
+    rgba(255, 105, 0, 0.04) 100%
   );
   pointer-events: none;
   z-index: 100;
@@ -199,6 +200,24 @@ body::before {
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+/* Additional warm overlay for extra warmth */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 223, 0, 0.03) 0%,
+    rgba(255, 193, 7, 0.02) 50%,
+    rgba(255, 165, 0, 0.01) 100%
+  );
+  pointer-events: none;
+  z-index: 99;
 }
 
 /* Ensure main content is above the overlay */
