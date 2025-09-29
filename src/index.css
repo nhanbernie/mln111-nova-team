@@ -621,3 +621,14 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+
+/* Popup scroll fix */
+.popup-container {
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+.popup-messages {
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}

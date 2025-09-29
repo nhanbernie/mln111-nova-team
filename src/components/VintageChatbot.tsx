@@ -68,12 +68,12 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
   // Gửi câu chào mừng khi mở chatbot lần đầu
   useEffect(() => {
     if (isOpen && !hasWelcomed && messages.length === 0) {
-      const welcomeMessage: Message = {
-        id: Date.now().toString(),
-        role: 'ai',
-        content: 'Xin chào! Tôi là AI Assistant chuyên về Triết học Mác-Lênin. Tôi có thể giúp bạn hiểu về:\n\n• Nhà nước và vai trò của nó trong xã hội\n• Cách mạng xã hội và các đặc điểm\n• Lịch sử phát triển của chủ nghĩa Mác-Lênin\n• Các khái niệm cơ bản về triết học\n\nHãy hỏi tôi bất kỳ điều gì về chủ đề này!',
-        timestamp: new Date()
-      };
+    const welcomeMessage: Message = {
+      id: Date.now().toString(),
+      role: 'ai',
+      content: 'Xin chào bạn! 👋 Tôi là AI siêu dễ thương chuyên về Triết học Mác-Lênin!\n\nTôi có thể giúp bạn hiểu về:\n🏛️ Nhà nước & vai trò\n🌍 Cách mạng xã hội\n📚 Lịch sử Mác-Lênin\n💡 Khái niệm triết học\n\nHỏi tôi bất kỳ điều gì nhé! Tôi sẽ giải thích một cách dễ thương và dễ hiểu! 😊',
+      timestamp: new Date()
+    };
       setMessages([welcomeMessage]);
       setHasWelcomed(true);
     }
@@ -99,21 +99,40 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
 
     try {
       // Thêm system prompt cho AI
-      const systemPrompt = "Bạn là một AI Assistant chuyên về Triết học Mác-Lênin. Hãy trả lời các câu hỏi liên quan đến:\n- Nhà nước và vai trò của nó trong xã hội\n- Cách mạng xã hội và các đặc điểm\n- Lịch sử phát triển của chủ nghĩa Mác-Lênin\n- Các khái niệm cơ bản về triết học\n\nHãy trả lời một cách chính xác, dễ hiểu và liên quan đến nội dung bài học. KHÔNG sử dụng format markdown như **in đậm** hoặc *in nghiêng*, chỉ trả lời bằng văn bản thuần túy.";
+      const systemPrompt = "Bạn là AI Assistant siêu dễ thương chuyên về Triết học Mác-Lênin! 😊 Trả lời NGẮN GỌN (1-3 câu) nhưng CỰC KỲ DỄ THƯƠNG và thân thiện. Chỉ trả lời về:\n- Nhà nước và vai trò\n- Cách mạng xã hội\n- Lịch sử Mác-Lênin\n- Khái niệm triết học cơ bản\n\nQUAN TRỌNG: Dùng TỐI ĐA 1-2 emoji thôi, giọng điệu ấm áp như bạn thân. TUYỆT ĐỐI KHÔNG dùng markdown như **bold** hoặc *italic* hoặc # heading. CHỈ dùng văn bản thuần túy. Nếu phức tạp thì chia nhỏ nhé! Hãy làm cho học tập trở nên vui vẻ!";
       
       const aiResponse = await sendMessage(userMessage, { systemPrompt });
       
+      // Clean AI response from markdown formatting
+      const cleanResponse = aiResponse
+        .replace(/\*\*(.*?)\*\*/g, '$1') // Remove **bold**
+        .replace(/\*(.*?)\*/g, '$1') // Remove *italic*
+        .replace(/#{1,6}\s*/g, '') // Remove # headings
+        .replace(/`(.*?)`/g, '$1') // Remove `code`
+        .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+        .trim();
+
       // Add AI response
       const newAIMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'ai',
-        content: aiResponse,
+        content: cleanResponse,
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, newAIMessage]);
     } catch (err) {
       console.error('Chat error:', err);
+      
+      // Add error message to chat
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'ai',
+        content: err instanceof Error ? err.message : 'Có lỗi xảy ra khi kết nối với AI. Vui lòng thử lại sau.',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsTyping(false);
     }
@@ -184,7 +203,7 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className={`fixed z-[300] bg-gradient-to-br from-[#8B4513]/70 to-[#D97706]/70 rounded-3xl shadow-2xl border border-white/20 flex flex-col overflow-hidden ${
+            className={`fixed z-[300] bg-gradient-to-br from-[#8B4513]/70 to-[#D97706]/70 rounded-3xl shadow-2xl border border-white/20 flex flex-col overflow-hidden popup-container ${
               isExpanded 
                 ? 'inset-4' 
                 : 'bottom-24 left-24 w-[28rem] h-[32rem]'
@@ -242,9 +261,14 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
             </div>
 
             {/* Messages Container */}
-            <div className={`flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent ${
+            <div className={`flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent popup-messages ${
               isExpanded ? 'p-6' : 'p-3'
-            }`}>
+            }`} 
+            style={{ 
+              maxHeight: isExpanded ? 'calc(100vh - 200px)' : 'calc(32rem - 120px)',
+              overflowY: 'auto'
+            }}
+            onWheel={(e) => e.stopPropagation()}>
               <div className={`mx-auto ${isExpanded ? 'max-w-4xl' : 'max-w-full'}`}>
                 {messages.length === 0 ? (
                   <div className={`text-center text-white/50 ${
@@ -263,13 +287,13 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                         <p className="text-base mb-6">Hãy bắt đầu cuộc trò chuyện với AI...</p>
                         
                         {/* Quick Start Suggestions */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
-                          {[
-                            "Giải thích về Triết học Mác-Lênin",
-                            "Nhà nước là gì và vai trò của nó?",
-                            "Cách mạng xã hội có những đặc điểm gì?",
-                            "Lịch sử phát triển của chủ nghĩa Mác-Lênin"
-                          ].map((suggestion, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+          {[
+            "✨ Triết học Mác-Lênin là gì vậy?",
+            "🏛️ Nhà nước có vai trò gì nhỉ?",
+            "🌍 Cách mạng xã hội là sao?",
+            "📚 Kể tôi nghe về Mác-Lênin!"
+          ].map((suggestion, index) => (
                             <motion.button
                               key={index}
                               onClick={() => setInput(suggestion)}
@@ -361,6 +385,29 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
                           </div>
                         </div>
                       </motion.div>
+                    )}
+                    
+                    {/* Quick Suggestions after AI messages */}
+                    {messages.length > 0 && messages[messages.length - 1]?.role === 'ai' && !isTyping && (
+                      <div className="mt-4">
+                        <p className="text-white/60 text-sm mb-3">💡 Bạn có thể hỏi thêm:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {[
+                            "Giải thích rõ hơn",
+                            "Ví dụ cụ thể", 
+                            "So sánh với hiện tại",
+                            "Tóm tắt lại"
+                          ].map((suggestion, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setInput(suggestion)}
+                              className="bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-3 py-1 text-xs text-white/80 transition-all duration-300"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     )}
                   </div>
                 )}
