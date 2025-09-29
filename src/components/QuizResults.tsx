@@ -32,34 +32,39 @@ export default function QuizResults({ score, total, answers, onRestart }: QuizRe
       playResultSound();
     }, 1000);
 
-    // GSAP entrance animation
-    gsap.fromTo(".results-card", 
-      { 
-        opacity: 0, 
-        scale: 0.8, 
-        y: 100,
-        rotationX: -15 
-      },
-      { 
-        opacity: 1, 
-        scale: 1, 
-        y: 0,
-        rotationX: 0,
-        duration: 1,
-        ease: "back.out(1.7)"
-      }
-    );
+    // GSAP entrance animation - Check if elements exist
+    const resultsCard = document.querySelector(".results-card");
+    if (resultsCard) {
+      gsap.fromTo(resultsCard, 
+        { 
+          opacity: 0, 
+          scale: 0.8, 
+          y: 100,
+          rotationX: -15 
+        },
+        { 
+          opacity: 1, 
+          scale: 1, 
+          y: 0,
+          rotationX: 0,
+          duration: 1,
+          ease: "back.out(1.7)"
+        }
+      );
+    }
 
-    // Animate score counter
-    gsap.fromTo(".score-number", 
-      { scale: 0 },
-      { 
-        scale: 1,
-        duration: 0.8,
-        ease: "back.out(1.7)",
+    // Animate score counter - Check if elements exist
+    const scoreNumbers = document.querySelectorAll(".score-number");
+    if (scoreNumbers.length > 0) {
+      gsap.fromTo(scoreNumbers, 
+        { scale: 0 },
+        { 
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.7)",
         delay: 0.5
-      }
-    );
+      });
+    }
 
     return () => {
       clearTimeout(soundDelay);

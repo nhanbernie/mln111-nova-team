@@ -60,37 +60,39 @@ export default function PracticePage() {
           }
         });
 
-        // Parallax effect - subtle movement on scroll
+        // Parallax effect - subtle movement on scroll (optimized)
         gsap.to(card, {
-          y: -30,
+          y: -15, // Reduced movement for better performance
           ease: "none",
           scrollTrigger: {
             trigger: card,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1
+            scrub: 2 // Increased scrub for smoother performance
           }
         });
 
-        // Content reveal animation
+        // Content reveal animation - Check if elements exist
         const contentElements = card.querySelectorAll('.content-reveal');
-        gsap.fromTo(contentElements, {
-          opacity: 0,
-          y: 20
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          delay: 0.3,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
-        });
+        if (contentElements.length > 0) {
+          gsap.fromTo(contentElements, {
+            opacity: 0,
+            y: 10 // Reduced movement for better performance
+          }, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6, // Reduced duration
+            stagger: 0.05, // Reduced stagger
+            delay: 0.2, // Reduced delay
+            ease: "power1.out", // Simpler easing
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%", // Optimized trigger point
+              end: "bottom 15%",
+              toggleActions: "play none none reverse"
+            }
+          });
+        }
       }
     });
 

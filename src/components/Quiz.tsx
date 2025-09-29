@@ -15,29 +15,31 @@ export default function Quiz({ onComplete }: QuizProps) {
   const [timeLeft] = useState(QUIZ_CONFIG.totalTime);
   const [isAnswered, setIsAnswered] = useState(false);
 
-  console.log("Quiz component rendered, currentQuestion:", currentQuestion);
 
   const question = quizQuestions[currentQuestion];
   const progress = ((currentQuestion + 1) / QUIZ_CONFIG.totalQuestions) * 100;
 
   useEffect(() => {
-    // GSAP entrance animation
-    gsap.fromTo(".quiz-card", 
-      { 
-        opacity: 0, 
-        scale: 0.8, 
-        y: 50,
-        rotationY: -15 
-      },
-      { 
-        opacity: 1, 
-        scale: 1, 
-        y: 0,
-        rotationY: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)"
-      }
-    );
+    // GSAP entrance animation - Check if elements exist
+    const quizCard = document.querySelector(".quiz-card");
+    if (quizCard) {
+      gsap.fromTo(quizCard, 
+        { 
+          opacity: 0, 
+          scale: 0.8, 
+          y: 50,
+          rotationY: -15 
+        },
+        { 
+          opacity: 1, 
+          scale: 1, 
+          y: 0,
+          rotationY: 0,
+          duration: 0.8,
+          ease: "back.out(1.7)"
+        }
+      );
+    }
   }, [currentQuestion]);
 
   const handleAnswerSelect = (answerIndex: number) => {
@@ -46,12 +48,15 @@ export default function Quiz({ onComplete }: QuizProps) {
     setSelectedAnswer(answerIndex);
     setIsAnswered(true);
     
-    // GSAP selection animation
-    gsap.to(`.option-${answerIndex}`, {
-      scale: 1.05,
-      duration: 0.3,
-      ease: "power2.out"
-    });
+    // GSAP selection animation - Check if element exists
+    const optionElement = document.querySelector(`.option-${answerIndex}`);
+    if (optionElement) {
+      gsap.to(optionElement, {
+        scale: 1.05,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    }
   };
 
   const handleNext = () => {
@@ -59,20 +64,23 @@ export default function Quiz({ onComplete }: QuizProps) {
     setAnswers(newAnswers);
     
     if (currentQuestion < QUIZ_CONFIG.totalQuestions - 1) {
-      // GSAP exit animation
-      gsap.to(".quiz-card", {
-        opacity: 0,
-        scale: 0.8,
-        y: -50,
-        rotationY: 15,
-        duration: 0.5,
-        ease: "power2.in",
-        onComplete: () => {
-          setCurrentQuestion(currentQuestion + 1);
-          setSelectedAnswer(null);
-          setIsAnswered(false);
-        }
-      });
+      // GSAP exit animation - Check if element exists
+      const quizCard = document.querySelector(".quiz-card");
+      if (quizCard) {
+        gsap.to(quizCard, {
+          opacity: 0,
+          scale: 0.8,
+          y: -50,
+          rotationY: 15,
+          duration: 0.5,
+          ease: "power2.in",
+          onComplete: () => {
+            setCurrentQuestion(currentQuestion + 1);
+            setSelectedAnswer(null);
+            setIsAnswered(false);
+          }
+        });
+      }
     } else {
       // Quiz completed
       const score = newAnswers.filter((answer, index) => 

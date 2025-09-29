@@ -32,19 +32,19 @@ export default function RevolutionSection() {
       if (section) {
         gsap.fromTo(section, {
           opacity: 0,
-          y: 50,
-          scale: 0.95
+          y: 30, // Reduced movement
+          scale: 0.98 // Reduced scale change
         }, {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1,
-          delay: index * 0.2,
-          ease: "power2.out",
+          duration: 0.8, // Reduced duration
+          delay: index * 0.1, // Reduced stagger delay
+          ease: "power1.out", // Simpler easing
           scrollTrigger: {
             trigger: section,
-            start: "top 85%",
-            end: "bottom 15%",
+            start: "top 90%", // Optimized trigger
+            end: "bottom 10%",
             toggleActions: "play none none reverse"
           }
         });

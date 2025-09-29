@@ -9,29 +9,29 @@ import * as THREE from "three";
 // Chỉ cần thay đổi các giá trị bên dưới để customize hiệu ứng khói
 
 const SMOKE_CONFIG = {
-  // 🎯 SỐ LƯỢNG & TẦN SUẤT
-  cloudCount: 4, // Số lượng đám khói (1-10)
-  minDelay: 5, // Delay tối thiểu (giây)
-  maxDelay: 17, // Delay tối đa (giây)
+  // 🎯 SỐ LƯỢNG & TẦN SUẤT (Balanced for visibility + performance)
+  cloudCount: 3, // Balanced: 3 clouds for good visibility
+  minDelay: 6, // Slightly increased delay
+  maxDelay: 18, // Slightly increased delay
 
-  // 🎨 MÀU SẮC & ĐỘ ĐẬM
+  // 🎨 MÀU SẮC & ĐỘ ĐẬM (Enhanced visibility)
   smokeColor: "#FAFAFA", // Màu khói (hex: #FFFFFF, #F0F0F0, #E0E0E0...)
-  opacity: 0.07, // Độ trong suốt (0.05-0.3)
+  opacity: 0.09, // Slightly increased for better visibility
 
-  // ⚡ TỐC ĐỘ & CHUYỂN ĐỘNG
-  movementSpeed: 0.002, // Tốc độ bay lên (0.001-0.01)
-  rotationSpeed: 0.0003, // Tốc độ xoay (0.0001-0.001)
-  cloudSpeed: 0.05, // Tốc độ animation Cloud (0.01-0.2)
-  fadeSpeed: 0.005, // Tốc độ fade in (0.001-0.01)
+  // ⚡ TỐC ĐỘ & CHUYỂN ĐỘNG (Optimized but visible)
+  movementSpeed: 0.0015, // Balanced speed
+  rotationSpeed: 0.0002, // Balanced rotation
+  cloudSpeed: 0.03, // Balanced cloud speed
+  fadeSpeed: 0.004, // Balanced fade speed
 
-  // 📏 KÍCH THƯỚC & VỊ TRÍ
-  minScale: 0.3, // Kích thước tối thiểu (0.1-1.0)
-  maxScale: 0.8, // Kích thước tối đa (0.5-2.0)
-  spawnArea: 20, // Vùng xuất hiện (10-50)
-  resetHeight: 8, // Chiều cao reset (5-15)
+  // 📏 KÍCH THƯỚC & VỊ TRÍ (Good visibility)
+  minScale: 0.4, // Slightly larger for visibility
+  maxScale: 0.9, // Slightly larger for visibility
+  spawnArea: 18, // Slightly reduced area
+  resetHeight: 7, // Slightly reduced height
 
-  // 🔧 CHẤT LƯỢNG
-  segments: 12, // Số segments (8-32, cao hơn = mượt hơn)
+  // 🔧 CHẤT LƯỢNG (Balanced performance)
+  segments: 10, // Balanced: 10 segments for good quality
 };
 
 // Realistic Smoke using Cloud component
@@ -145,7 +145,10 @@ const SmokeEffect = () => {
           alpha: true,
           antialias: true,
           powerPreference: "high-performance",
+          preserveDrawingBuffer: false, // Optimize memory
+          failIfMajorPerformanceCaveat: false, // Allow fallback
         }}
+        dpr={[1, 1.5]} // Slightly limit device pixel ratio
       >
         {/* Soft lighting for realistic smoke */}
         <ambientLight intensity={0.6} />
