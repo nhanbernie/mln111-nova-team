@@ -1,20 +1,79 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useAI, useAIConfig } from "../hooks/useAI";
+import type { QuizQuestion } from "../data/quizData";
+import { ExclamationTriangleIcon, CpuChipIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 
 export default function QuizStartPage() {
   const navigate = useNavigate();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [useAIGenerated, setUseAIGenerated] = useState(false);
+  const [aiQuestions, setAiQuestions] = useState<QuizQuestion[]>([]);
+  const [countdown, setCountdown] = useState(0);
+  
+  const { isLoading, error, generateQuiz } = useAI();
+  const { isConfigured } = useAIConfig();
+
 
   const startQuiz = () => {
     // Play click sound
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play().catch(() => {
-        console.log("Audio play failed");
+        // Audio play failed
       });
     }
+    
+    // Clear AI questions and use default
+    localStorage.removeItem('aiGeneratedQuestions');
+    localStorage.removeItem('useAIGenerated');
+    
     navigate("/quiz/start");
+  };
+
+  const handleAIGenerate = async () => {
+    try {
+      const quiz = await generateQuiz(
+        "Nhà nước và Cách mạng xã hội - Triết học Mác-Lênin",
+        "medium",
+        10
+      );
+      
+      if (quiz && quiz.questions) {
+        // Transform AI response to our format
+        const transformedQuestions: QuizQuestion[] = quiz.questions.map((q: any, index: number) => ({
+          id: `ai_q${index + 1}`,
+          question: q.question,
+          options: q.options,
+          correctAnswer: q.correctAnswer,
+          explanation: q.explanation || "Câu trả lời được tạo bởi AI"
+        }));
+        
+        setAiQuestions(transformedQuestions);
+        setUseAIGenerated(true);
+        
+        // Save to localStorage immediately
+        localStorage.setItem('aiGeneratedQuestions', JSON.stringify(transformedQuestions));
+        localStorage.setItem('useAIGenerated', 'true');
+        
+        // Start countdown and auto navigate
+        setCountdown(3);
+        const countdownInterval = setInterval(() => {
+          setCountdown(prev => {
+            if (prev <= 1) {
+              clearInterval(countdownInterval);
+              // Navigate directly without calling startQuiz
+              navigate("/quiz/start");
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      }
+    } catch (err) {
+      // AI Generate Error
+    }
   };
 
   return (
@@ -85,6 +144,87 @@ export default function QuizStartPage() {
                   <div className="text-sm font-dancing-script">Tổng thời gian</div>
                 </div>
               </div>
+            </motion.div>
+
+            {/* AI Generate Button */}
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <motion.button
+                onClick={handleAIGenerate}
+                disabled={isLoading || !isConfigured}
+                className={`bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg transition-all duration-300 hover:shadow-xl relative overflow-hidden group font-dancing-script disabled:opacity-50 disabled:cursor-not-allowed ${
+                  !isConfigured ? 'cursor-not-allowed' : ''
+                }`}
+                whileHover={{ 
+                  scale: 1.05,
+                  y: -2
+                }}
+                whileTap={{ 
+                  scale: 0.95
+                }}
+              >
+                {isLoading ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Đang tạo câu hỏi AI...</span>
+                  </div>
+                ) : !isConfigured ? (
+                  <div className="flex items-center gap-3">
+                    <ExclamationTriangleIcon className="w-5 h-5" />
+                    <span>Cần cấu hình API key</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <CpuChipIcon className="w-5 h-5" />
+                    <span>Tạo câu hỏi với AI</span>
+                  </div>
+                )}
+                
+                {/* Hover effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
+              </motion.button>
+              
+              {/* Error message */}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 bg-red-500/20 border border-red-500/30 rounded-xl p-4"
+                >
+                  <p className="text-red-300 text-sm">{error}</p>
+                </motion.div>
+              )}
+              
+              
+              {/* Success message */}
+              {useAIGenerated && aiQuestions.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 bg-green-500/20 border border-green-500/30 rounded-xl p-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <CheckCircleIcon className="w-4 h-4 text-green-400" />
+                    <p className="text-green-300 text-sm">
+                      Đã tạo {aiQuestions.length} câu hỏi AI thành công!
+                    </p>
+                  </div>
+                  {countdown > 0 && (
+                    <p className="text-green-200 text-xs mt-2">
+                      Chuyển đến quiz trong {countdown} giây...
+                    </p>
+                  )}
+                </motion.div>
+              )}
             </motion.div>
 
             <motion.button

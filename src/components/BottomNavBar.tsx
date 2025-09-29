@@ -73,7 +73,6 @@ const BottomNavBar = () => {
         <motion.div
           className="relative"
           onHoverStart={() => {
-            playClickSound();
             setIsExpanded(true);
           }}
           onHoverEnd={() => setIsExpanded(false)}

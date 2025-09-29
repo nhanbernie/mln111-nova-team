@@ -1,12 +1,20 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { quizQuestions, QUIZ_CONFIG } from "../data/quizData";
+import type { QuizQuestion } from "../data/quizData";
+import { CpuChipIcon } from "@heroicons/react/24/outline";
 
 interface SimpleQuizProps {
+  questions?: QuizQuestion[];
+  useAIGenerated?: boolean;
   onComplete: (score: number, total: number, answers: number[]) => void;
 }
 
-export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
+export default function SimpleQuiz({ 
+  questions = quizQuestions, 
+  useAIGenerated = false, 
+  onComplete 
+}: SimpleQuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -14,8 +22,9 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const resultAudioRef = useRef<HTMLAudioElement>(null);
 
-  const question = quizQuestions[currentQuestion];
-  const progress = ((currentQuestion + 1) / QUIZ_CONFIG.totalQuestions) * 100;
+
+  const question = questions[currentQuestion];
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   const playClickSound = () => {
     if (audioRef.current) {
@@ -55,16 +64,16 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
     } else {
       // Quiz completed - play result sound based on score
       const score = newAnswers.filter((answer, index) => 
-        answer === quizQuestions[index].correctAnswer
+        answer === questions[index].correctAnswer
       ).length;
-      const percentage = (score / QUIZ_CONFIG.totalQuestions) * 100;
+      const percentage = (score / questions.length) * 100;
       
       // Play result sound based on performance
       setTimeout(() => {
         playResultSound(percentage >= 70);
       }, 1000);
       
-      onComplete(score, QUIZ_CONFIG.totalQuestions, newAnswers);
+      onComplete(score, questions.length, newAnswers);
     }
   };
 
@@ -110,8 +119,16 @@ export default function SimpleQuiz({ onComplete }: SimpleQuizProps) {
                 {currentQuestion + 1}
               </div>
               <div className="text-2xl text-white/70 font-dancing-script">
-                /{QUIZ_CONFIG.totalQuestions} câu
+                /{questions.length} câu
               </div>
+              {useAIGenerated && (
+                <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 rounded-full px-4 py-2">
+                  <div className="flex items-center gap-2">
+                    <CpuChipIcon className="w-4 h-4 text-blue-300" />
+                    <span className="text-blue-300 text-sm font-semibold">AI Generated</span>
+                  </div>
+                </div>
+              )}
             </div>
             
             {/* Ultra Beautiful Progress Bar */}

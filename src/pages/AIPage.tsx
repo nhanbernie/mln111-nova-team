@@ -26,9 +26,8 @@ export default function AIPage() {
         tools: ["ChatGPT (GPT-5)", "Notebooklm", "Quizlet AI"],
         purpose: "Hỗ trợ soạn câu hỏi trắc nghiệm, gợi ý sơ đồ tư duy, gợi ý quiz ôn tập",
         results: [
-          "Cấu trúc HTML cơ bản cho 5 trang web",
-          "CSS với design gradient và responsive layout", 
-          "JavaScript cho quiz tương tác và timer",
+          "Design trang web hiệu ứng mượt với Gsap",
+          "Sử dụng AI để tạo câu hỏi từ AI dựa trên nội dung học tập", 
           "Nội dung tóm tắt từ lý thuyết trong PDF"
         ],
         edits: [

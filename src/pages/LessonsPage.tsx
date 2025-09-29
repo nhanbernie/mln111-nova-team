@@ -114,7 +114,7 @@ export default function LessonsPage() {
             CHƯƠNG 3
           </motion.h1>
           <motion.h2
-            className="text-4xl md:text-6xl font-bold mb-6 font-dancing-script"
+            className="text-4xl md:text-6xl font-bold mb-6 p-2 font-dancing-script"
             style={{
               background: "linear-gradient(135deg, #f59e0b, #d97706, #b45309)",
               backgroundClip: "text",

@@ -32,7 +32,7 @@ export const practiceTopics: PracticeTopic[] = [
       { label: "Đầu tư R&D", value: "2.5%", description: "GDP trung bình" },
       { label: "Lao động tri thức", value: "60%", description: "Lực lượng lao động" }
     ],
-    image: "/pracitcal/pmc.png"
+    image: "/pracitcal/image.png"
   },
   {
     id: "ai-revolution",
@@ -49,7 +49,7 @@ export const practiceTopics: PracticeTopic[] = [
       { label: "Ứng dụng y tế", value: "85%", description: "Độ chính xác" },
       { label: "Tự động hóa", value: "40%", description: "Công việc" }
     ],
-    image: "/pracitcal/asean.png"
+    image: "/pracitcal/ai.png"
   },
   {
     id: "smart-cities",
@@ -66,7 +66,7 @@ export const practiceTopics: PracticeTopic[] = [
       { label: "Tốc độ 5G", value: "10Gbps", description: "Truyền dữ liệu" },
       { label: "Tiết kiệm năng lượng", value: "30%", description: "Smart City" }
     ],
-    image: "/pracitcal/pmc.png"
+    image: "/pracitcal/future.png"
   },
   {
     id: "knowledge-economy",
@@ -83,7 +83,7 @@ export const practiceTopics: PracticeTopic[] = [
       { label: "Bằng sáng chế", value: "1.2M", description: "Năm 2024" },
       { label: "Startup", value: "50K", description: "Toàn cầu" }
     ],
-    image: "/pracitcal/asean.png"
+    image: "/pracitcal/knowledge.png"
   },
   {
     id: "conflicts",
@@ -100,7 +100,7 @@ export const practiceTopics: PracticeTopic[] = [
       { label: "Người tị nạn", value: "110M", description: "Toàn cầu" },
       { label: "Thiệt hại kinh tế", value: "$2.8T", description: "Năm 2024" }
     ],
-    image: "/pracitcal/pmc.png"
+    image: "/pracitcal/conf.png"
   },
   {
     id: "dialogue",
@@ -117,7 +117,7 @@ export const practiceTopics: PracticeTopic[] = [
       { label: "Tổ chức quốc tế", value: "300+", description: "Toàn cầu" },
       { label: "Hợp tác kinh tế", value: "85%", description: "Các nước" }
     ],
-    image: "/pracitcal/asean.png"
+    image: "/pracitcal/united.png"
   },
   {
     id: "vietnam",
