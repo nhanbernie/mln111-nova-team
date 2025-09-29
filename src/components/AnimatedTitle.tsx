@@ -90,7 +90,7 @@ const AnimatedTitle = () => {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="text-4xl md:text-6xl lg:text-8xl font-bold leading-tight relative"
           style={{
-            fontFamily: "'Dancing Script', cursive",
+            fontFamily:  "'Dancing Script', cursive",
             letterSpacing: "0.02em",
             wordSpacing: "0.1em",
           }}
