@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useAI, useAIConfig } from "../hooks/useAI";
 import type { QuizQuestion } from "../data/quizData";
-import { ExclamationTriangleIcon, CpuChipIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon, CpuChipIcon } from "@heroicons/react/24/outline";
 
 export default function QuizStartPage() {
   const navigate = useNavigate();

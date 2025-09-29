@@ -49,7 +49,23 @@ class AIService {
     this.apiKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
     this.siteURL = import.meta.env.VITE_SITE_URL || 'http://localhost:5173';
     this.siteName = import.meta.env.VITE_SITE_NAME || 'MLN111 Learning Platform';
-    this.defaultModel = import.meta.env.VITE_DEFAULT_MODEL || 'google/gemini-2.5-flash';
+    this.defaultModel = import.meta.env.VITE_DEFAULT_MODEL || 'google/gemma-3n-e2b-it:free';
+  }
+
+  /**
+   * Check if model supports system prompt
+   */
+  private supportsSystemPrompt(model: string): boolean {
+    // Models that don't support system prompt
+    const noSystemPromptModels = [
+      'google/gemma-3n-e2b-it',
+      'google/gemma-2-9b-it',
+      'google/gemma-2-27b-it',
+      'meta-llama/llama-3.1-8b-instruct',
+      'microsoft/phi-3-mini-128k-instruct'
+    ];
+    
+    return !noSystemPromptModels.some(noSystemModel => model.includes(noSystemModel));
   }
 
   /**
@@ -60,20 +76,28 @@ class AIService {
     options: AIRequestOptions = {}
   ): Promise<AIResponse> {
     const messages: AIMessage[] = [];
+    const model = options.model || this.defaultModel;
     
-    // Thêm system prompt nếu có
-    if (options.systemPrompt) {
+    // Chỉ thêm system prompt nếu model hỗ trợ
+    if (options.systemPrompt && this.supportsSystemPrompt(model)) {
       messages.push({
         role: 'system',
         content: options.systemPrompt
       });
+    } else if (options.systemPrompt) {
+      // Nếu model không hỗ trợ system prompt, thêm vào user message
+      messages.push({
+        role: 'user',
+        content: `${options.systemPrompt}\n\n${message}`
+      });
+      return this.chat(messages, options);
     }
     
     messages.push({
       role: 'user',
       content: message
     });
-
+  
     return this.chat(messages, options);
   }
 
@@ -110,17 +134,40 @@ class AIService {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          `API request failed: ${response.status} ${response.statusText}. ${
-            errorData.error?.message || ''
-          }`
-        );
+        
+        // Handle specific error cases
+        if (response.status === 401) {
+          throw new Error('API key không hợp lệ hoặc đã hết hạn. Vui lòng kiểm tra lại API key.');
+        } else if (response.status === 429) {
+          throw new Error('Đã vượt quá giới hạn sử dụng. Vui lòng thử lại sau.');
+        } else if (response.status === 402) {
+          throw new Error('Tài khoản không có đủ credit. Vui lòng nạp thêm credit.');
+        } else {
+          throw new Error(
+            `Lỗi API: ${response.status} ${response.statusText}. ${
+              errorData.error?.message || 'Vui lòng thử lại sau.'
+            }`
+          );
+        }
       }
 
-      return await response.json();
+      const result = await response.json();
+      
+      // Check if response has valid content
+      if (!result.choices || result.choices.length === 0) {
+        throw new Error('AI không trả về phản hồi hợp lệ. Vui lòng thử lại.');
+      }
+
+      return result;
     } catch (error) {
       console.error('AI Service Error:', error);
-      throw error;
+      
+      // Re-throw with user-friendly message
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error('Có lỗi xảy ra khi kết nối với AI. Vui lòng kiểm tra kết nối mạng và thử lại.');
+      }
     }
   }
 
@@ -165,23 +212,15 @@ class AIService {
     Hãy trả lời câu hỏi một cách chính xác, dễ hiểu và có tính giáo dục cao.
     ${context ? `Bối cảnh: ${context}` : ''}`;
 
-    const messages: AIMessage[] = [
-      {
-        role: 'system',
-        content: systemPrompt
-      },
-      {
-        role: 'user',
-        content: `Chủ đề: ${topic}\nCâu hỏi: ${question}`
-      }
-    ];
-
+    // Sử dụng sendMessage để tự động handle system prompt
+    const userMessage = `Chủ đề: ${topic}\nCâu hỏi: ${question}`;
+    
     try {
-      const response = await this.chat(messages, {
+      const response = await this.sendMessage(userMessage, {
+        systemPrompt,
         temperature: 0.3,
         max_tokens: 1500
       });
-
       return response.choices[0]?.message?.content || 'Không thể tạo phản hồi.';
     } catch (error) {
       console.error('Educational AI Error:', error);
@@ -217,20 +256,13 @@ class AIService {
       ]
     }`;
 
-    const messages: AIMessage[] = [
-      {
-        role: 'system',
-        content: systemPrompt
-      },
-      {
-        role: 'user',
-        content: `Tạo ${numberOfQuestions} câu hỏi trắc nghiệm về "${topic}" dựa trên nội dung Triết học Mác-Lênin. 
-        Đảm bảo câu hỏi chính xác, có tính giáo dục cao và phù hợp với chương trình học.`
-      }
-    ];
+    // Sử dụng sendMessage để tự động handle system prompt
+    const userMessage = `Tạo ${numberOfQuestions} câu hỏi trắc nghiệm về "${topic}" dựa trên nội dung Triết học Mác-Lênin. 
+    Đảm bảo câu hỏi chính xác, có tính giáo dục cao và phù hợp với chương trình học.`;
 
     try {
-      const response = await this.chat(messages, {
+      const response = await this.sendMessage(userMessage, {
+        systemPrompt,
         temperature: 0.3,
         max_tokens: 3000
       });

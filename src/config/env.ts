@@ -5,7 +5,7 @@ export const env = {
   SITE_URL: import.meta.env.VITE_SITE_URL || "http://localhost:5173",
   SITE_NAME: import.meta.env.VITE_SITE_NAME || "MLN111 Learning Platform",
   DEFAULT_MODEL:
-    import.meta.env.VITE_DEFAULT_MODEL || "google/gemini-2.5-flash",
+    import.meta.env.VITE_DEFAULT_MODEL || "google/gemma-3n-e2b-it:free",
 
   // App settings
   NODE_ENV: import.meta.env.MODE,
@@ -36,6 +36,7 @@ export const getAPIHeaders = () => ({
 
 // Available models
 export const AVAILABLE_MODELS = [
+  "google/gemma-3n-e2b-it:free",
   "google/gemini-2.5-flash",
   "openai/gpt-4o",
   "openai/gpt-4o-mini",
