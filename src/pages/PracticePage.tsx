@@ -23,52 +23,72 @@ export default function PracticePage() {
   const heroRef = useRef<HTMLDivElement>(null);
 
 
-  // GSAP Animations - Simple stable tilt
+  // GSAP Animations - Enhanced with cool effects
   useEffect(() => {
-    // Hero section animation
+    // Hero section animation with scale effect
     if (heroRef.current) {
       gsap.fromTo(heroRef.current, 
-        { opacity: 0, y: 30, scale: 0.98 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power1.out" }
+        { opacity: 0, y: 30, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power2.out" }
       );
     }
 
-    // Sections animation - simple and stable
+    // Sections animation with enhanced effects
     const cardElements = cardRefs.current.filter(Boolean);
     
     cardElements.forEach((card, index) => {
       if (card) {
-        gsap.set(card, { 
+        // Enhanced entrance animation with stagger
+        gsap.fromTo(card, {
           opacity: 0,
           y: 50,
-          scale: 0.98
-        });
-
-        // Simple entrance animation
-        gsap.to(card, {
+          scale: 0.9,
+          rotationX: -10
+        }, {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1.2,
+          rotationX: 0,
+          duration: 1,
           delay: index * 0.15,
-          ease: "power1.out",
+          ease: "power2.out",
           scrollTrigger: {
             trigger: card,
-            start: "top 90%",
-            end: "bottom 10%",
+            start: "top 85%",
+            end: "bottom 15%",
             toggleActions: "play none none reverse"
           }
         });
 
-        // Simple parallax effect
+        // Parallax effect - subtle movement on scroll
         gsap.to(card, {
-          y: -15,
+          y: -30,
           ease: "none",
           scrollTrigger: {
             trigger: card,
             start: "top bottom",
             end: "bottom top",
-            scrub: 0.5
+            scrub: 1
+          }
+        });
+
+        // Content reveal animation
+        const contentElements = card.querySelectorAll('.content-reveal');
+        gsap.fromTo(contentElements, {
+          opacity: 0,
+          y: 20
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          delay: 0.3,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
           }
         });
       }
@@ -81,13 +101,47 @@ export default function PracticePage() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+      {/* Floating Particles Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-white/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              x: [0, Math.random() * 20 - 10, 0],
+              opacity: [0.2, 0.8, 0.2],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
+
       {/* Hero Section */}
       <motion.div
         ref={heroRef}
         className="min-h-screen flex items-center justify-center relative z-50"
         style={{
-          transformStyle: "preserve-3d",
-          perspective: "1000px"
+          // background: "linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%)",
+          backgroundSize: "400% 400%"
+        }}
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
         }}
       >
         <div className="text-center max-w-6xl mx-auto px-8">
@@ -159,7 +213,7 @@ export default function PracticePage() {
 
           {/* Scroll Indicator */}
           <motion.div
-            className="absolute bottom-12 left-1/2 transform -translate-x-1/2 py-1"
+            className="absolute bottom-12 left-1/2 transform -translate-x-1/2 py-18"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2, duration: 1.2, ease: "easeOut" }}
@@ -189,11 +243,7 @@ export default function PracticePage() {
       {/* Main Content Sections */}
       <section
         ref={sectionRef}
-        className="relative z-40"
-        style={{
-          transformStyle: "preserve-3d",
-          perspective: "1000px"
-        }}
+        className="relative"
       >
         {/* Section 1: Xã hội hiện đại */}
         <motion.div
@@ -202,21 +252,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-amber-600/70 to-orange-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-amber-900/90 to-amber-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-amber-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <GlobeAltIcon className="w-16 h-16 text-amber-100" />
+                <GlobeAltIcon className="w-16 h-16 text-amber-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-amber-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-amber-100 mb-2 font-dancing-script drop-shadow-lg">
                     Xã hội hiện đại
                   </h2>
-                  <p className="text-2xl text-amber-100/90 font-dancing-script">
+                  <p className="text-2xl text-amber-200 font-dancing-script">
                     Cách mạng khoa học - công nghệ
                   </p>
                 </div>
@@ -280,13 +333,31 @@ export default function PracticePage() {
                 </div>
 
                 <div className="relative">
-                  <img
+                  <motion.img
                     src={practiceTopics[0].image}
                     alt={practiceTopics[0].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-xl"
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 25px 50px rgba(0,0,0,0.3)",
+                      transition: { duration: 0.3 }
+                    }}
+                    animate={{
+                      boxShadow: [
+                        "0 10px 30px rgba(0,0,0,0.2)",
+                        "0 15px 35px rgba(0,0,0,0.25)",
+                        "0 10px 30px rgba(0,0,0,0.2)"
+                      ]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-3deg)",
-                      boxShadow: "0 25px 50px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
@@ -307,21 +378,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-slate-600/70 to-gray-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-slate-900/90 to-slate-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-slate-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <CpuChipIcon className="w-16 h-16 text-slate-100" />
+                <CpuChipIcon className="w-16 h-16 text-slate-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-slate-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-slate-100 mb-2 font-dancing-script drop-shadow-lg">
                     Trí tuệ nhân tạo
                   </h2>
-                  <p className="text-2xl text-slate-100/90 font-dancing-script">
+                  <p className="text-2xl text-slate-200 font-dancing-script">
                     AI thay đổi cách làm việc
                   </p>
                 </div>
@@ -336,8 +410,10 @@ export default function PracticePage() {
                 <motion.div 
                   className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20"
                   style={{
-                    transform: "perspective(1000px) rotateY(-3deg) rotateX(1deg)",
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                    willChange: "transform, opacity, filter",
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px",
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.15)"
                   }}
                 >
                   <h3 className="text-3xl font-bold text-white mb-6 font-dancing-script">
@@ -356,8 +432,10 @@ export default function PracticePage() {
                 <motion.div 
                   className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20"
                   style={{
-                    transform: "perspective(1000px) rotateY(3deg) rotateX(-1deg)",
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                    willChange: "transform, opacity, filter",
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px",
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.15)"
                   }}
                 >
                   <h3 className="text-3xl font-bold text-white mb-6 font-dancing-script">
@@ -380,8 +458,10 @@ export default function PracticePage() {
                 <motion.div 
                   className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20"
                   style={{
-                    transform: "perspective(1000px) rotateY(-2deg) rotateX(1deg)",
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                    willChange: "transform, opacity, filter",
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px",
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.15)"
                   }}
                 >
                   <h3 className="text-3xl font-bold text-white mb-6 font-dancing-script">
@@ -408,8 +488,9 @@ export default function PracticePage() {
                     alt={practiceTopics[1].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-2xl"
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-2deg)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
@@ -430,21 +511,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-emerald-600/70 to-teal-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-emerald-900/90 to-emerald-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-emerald-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <BuildingOfficeIcon className="w-16 h-16 text-emerald-100" />
+                <BuildingOfficeIcon className="w-16 h-16 text-emerald-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-emerald-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-emerald-100 mb-2 font-dancing-script drop-shadow-lg">
                     Thành phố thông minh
                   </h2>
-                  <p className="text-2xl text-emerald-100/90 font-dancing-script">
+                  <p className="text-2xl text-emerald-200 font-dancing-script">
                     5G và IoT
                   </p>
                 </div>
@@ -459,8 +543,10 @@ export default function PracticePage() {
                 <motion.div 
                   className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20"
                   style={{
-                    transform: "perspective(1000px) rotateY(-3deg) rotateX(1deg)",
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                    willChange: "transform, opacity, filter",
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px",
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.15)"
                   }}
                 >
                   <h3 className="text-3xl font-bold text-white mb-6 font-dancing-script">
@@ -519,8 +605,9 @@ export default function PracticePage() {
                     alt={practiceTopics[2].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-2xl"
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-2deg)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
@@ -541,21 +628,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-amber-600/70 to-yellow-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-amber-900/90 to-amber-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-amber-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <LightBulbIcon className="w-16 h-16 text-amber-100" />
+                <LightBulbIcon className="w-16 h-16 text-amber-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-amber-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-amber-100 mb-2 font-dancing-script drop-shadow-lg">
                     Kinh tế tri thức
                   </h2>
-                  <p className="text-2xl text-amber-100/90 font-dancing-script">
+                  <p className="text-2xl text-amber-200 font-dancing-script">
                     Dựa vào tri thức và sáng tạo
                   </p>
                 </div>
@@ -624,8 +714,9 @@ export default function PracticePage() {
                     alt={practiceTopics[3].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-2xl"
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-2deg)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
@@ -646,21 +737,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-rose-600/70 to-red-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-rose-900/90 to-rose-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-rose-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <ShieldExclamationIcon className="w-16 h-16 text-rose-100" />
+                <ShieldExclamationIcon className="w-16 h-16 text-rose-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-rose-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-rose-100 mb-2 font-dancing-script drop-shadow-lg">
                     Xung đột đương đại
                   </h2>
-                  <p className="text-2xl text-rose-100/90 font-dancing-script">
+                  <p className="text-2xl text-rose-200 font-dancing-script">
                     Sắc tộc, tôn giáo, kinh tế
                   </p>
                 </div>
@@ -729,8 +823,9 @@ export default function PracticePage() {
                     alt={practiceTopics[4].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-2xl"
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-2deg)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
@@ -751,21 +846,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-blue-600/70 to-indigo-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-blue-900/90 to-blue-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-blue-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <ChatBubbleLeftRightIcon className="w-16 h-16 text-blue-100" />
+                <ChatBubbleLeftRightIcon className="w-16 h-16 text-blue-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-blue-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-blue-100 mb-2 font-dancing-script drop-shadow-lg">
                     Xu hướng đối thoại
                   </h2>
-                  <p className="text-2xl text-blue-100/90 font-dancing-script">
+                  <p className="text-2xl text-blue-200 font-dancing-script">
                     Hòa giải và hợp tác
                   </p>
                 </div>
@@ -834,8 +932,9 @@ export default function PracticePage() {
                     alt={practiceTopics[5].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-2xl"
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-2deg)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
@@ -856,21 +955,24 @@ export default function PracticePage() {
           }}
           className="min-h-screen flex items-center justify-center py-20 px-8"
           style={{
-            willChange: 'transform, opacity, filter',
-            transformStyle: "preserve-3d",
-            perspective: "1000px"
+            boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
+          }}
+          whileHover={{
+            scale: 1.02,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            transition: { duration: 0.3 }
           }}
         >
           <div className="max-w-6xl mx-auto">
             {/* Header Banner */}
-            <div className="bg-gradient-to-r from-emerald-600/70 to-green-600/70 rounded-2xl p-8 mb-12 shadow-2xl">
+            <div className="bg-gradient-to-r from-emerald-900/90 to-emerald-950/90 rounded-2xl p-8 mb-12 shadow-2xl border border-emerald-700/60 backdrop-blur-sm">
               <div className="flex items-center gap-6 mb-6">
-                <HeartIcon className="w-16 h-16 text-emerald-100" />
+                <HeartIcon className="w-16 h-16 text-emerald-200" />
                 <div>
-                  <h2 className="text-5xl font-bold text-emerald-50 mb-2 font-dancing-script">
+                  <h2 className="text-5xl font-bold text-emerald-100 mb-2 font-dancing-script drop-shadow-lg">
                     Việt Nam hội nhập
                   </h2>
-                  <p className="text-2xl text-emerald-100/90 font-dancing-script">
+                  <p className="text-2xl text-emerald-200 font-dancing-script">
                     Đa phương hóa, đa dạng hóa
                   </p>
                 </div>
@@ -939,8 +1041,9 @@ export default function PracticePage() {
                     alt={practiceTopics[6].title}
                     className="w-full h-64 object-cover rounded-2xl shadow-2xl"
                     style={{
-                      transform: "perspective(1000px) rotateX(2deg) rotateY(-2deg)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+                      transformStyle: "preserve-3d",
+                      perspective: "1000px",
+                      willChange: "transform, opacity, filter"
                     }}
                   />
                   <motion.div
