@@ -5,6 +5,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
 import SmokeEffect from "./components/SmokeEffect";
+import VintageChatbot from "./components/VintageChatbot";
 import HomePage from "./pages/HomePage";
 import LessonsPage from "./pages/LessonsPage";
 import PracticePage from "./pages/PracticePage";
@@ -16,6 +17,7 @@ function MLN() {
   const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const location = useLocation();
 
@@ -83,6 +85,26 @@ function MLN() {
         )}
       </AnimatePresence>
       {showContent && <SmokeEffect />}
+
+      {/* Chatbot */}
+      {showContent && (
+        <VintageChatbot 
+          isOpen={isChatbotOpen} 
+          onClose={() => setIsChatbotOpen(false)} 
+        />
+      )}
+
+      {/* Chatbot Toggle Button */}
+      {showContent && (
+          <button
+            onClick={() => setIsChatbotOpen(true)}
+            className="fixed bottom-44 left-6 z-[100] w-12 h-12 bg-gradient-to-br from-[#8B4513]/80 to-[#D97706]/80 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+          >
+          <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </button>
+      )}
 
       {/* Bottom Navigation Bar */}
       {showContent && <BottomNavBar />}

@@ -35,6 +35,7 @@ export interface AIRequestOptions {
   temperature?: number;
   max_tokens?: number;
   stream?: boolean;
+  systemPrompt?: string;
 }
 
 class AIService {
@@ -58,12 +59,20 @@ class AIService {
     message: string,
     options: AIRequestOptions = {}
   ): Promise<AIResponse> {
-    const messages: AIMessage[] = [
-      {
-        role: 'user',
-        content: message
-      }
-    ];
+    const messages: AIMessage[] = [];
+    
+    // Thêm system prompt nếu có
+    if (options.systemPrompt) {
+      messages.push({
+        role: 'system',
+        content: options.systemPrompt
+      });
+    }
+    
+    messages.push({
+      role: 'user',
+      content: message
+    });
 
     return this.chat(messages, options);
   }
