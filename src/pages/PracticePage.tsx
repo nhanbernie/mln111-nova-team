@@ -38,58 +38,45 @@ export default function PracticePage() {
     
     cardElements.forEach((card, index) => {
       if (card) {
-        // Enhanced entrance animation with stagger
+        // Simplified entrance animation
         gsap.fromTo(card, {
           opacity: 0,
-          y: 50,
-          scale: 0.9,
-          rotationX: -10
+          y: 20
         }, {
           opacity: 1,
           y: 0,
-          scale: 1,
-          rotationX: 0,
-          duration: 1,
-          delay: index * 0.15,
-          ease: "power2.out",
+          duration: 0.5,
+          delay: index * 0.05,
+          ease: "power1.out",
           scrollTrigger: {
             trigger: card,
-            start: "top 85%",
-            end: "bottom 15%",
-            toggleActions: "play none none reverse"
+            start: "top 90%",
+            end: "bottom 10%",
+            toggleActions: "play none none reverse",
+            fastScrollEnd: true
           }
         });
 
-        // Parallax effect - subtle movement on scroll (optimized)
-        gsap.to(card, {
-          y: -15, // Reduced movement for better performance
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 2 // Increased scrub for smoother performance
-          }
-        });
+        // Disabled parallax for better performance
+        // gsap.to(card, { ... });
 
-        // Content reveal animation - Check if elements exist
+        // Content reveal animation - Simplified
         const contentElements = card.querySelectorAll('.content-reveal');
         if (contentElements.length > 0) {
           gsap.fromTo(contentElements, {
-            opacity: 0,
-            y: 10 // Reduced movement for better performance
+            opacity: 0
           }, {
             opacity: 1,
-            y: 0,
-            duration: 0.6, // Reduced duration
-            stagger: 0.05, // Reduced stagger
-            delay: 0.2, // Reduced delay
-            ease: "power1.out", // Simpler easing
+            duration: 0.4,
+            stagger: 0.02,
+            delay: 0.1,
+            ease: "power1.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 85%", // Optimized trigger point
-              end: "bottom 15%",
-              toggleActions: "play none none reverse"
+              start: "top 90%",
+              end: "bottom 10%",
+              toggleActions: "play none none reverse",
+              fastScrollEnd: true
             }
           });
         }

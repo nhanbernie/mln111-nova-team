@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { useLenis } from "./hooks/useLenis";
 import LoadingScreen from "./components/LoadingScreen";
 import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
@@ -20,6 +21,9 @@ function MLN() {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const location = useLocation();
+  
+  // Initialize Lenis for smooth scrolling
+  useLenis();
 
   const toggleMusic = () => {
     if (audioRef.current) {

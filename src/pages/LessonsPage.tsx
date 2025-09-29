@@ -18,35 +18,44 @@ export default function LessonsPage() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Hero section animation
+    // ScrollTrigger works with Lenis automatically
+    
+    // Hero section animation - Simplified
     if (heroRef.current) {
       gsap.fromTo(heroRef.current, 
-        { opacity: 0, y: 30, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "power2.out" }
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power1.out" }
       );
     }
 
-    // Sections animation
+    // Sections animation - Optimized with Lenis
     const sectionElements = sectionRefs.current.filter(Boolean);
     
     sectionElements.forEach((section, index) => {
       if (section) {
         gsap.fromTo(section, {
           opacity: 0,
-          y: 30, // Reduced movement
-          scale: 0.98 // Reduced scale change
+          y: 10
         }, {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.8, // Reduced duration
-          delay: index * 0.1, // Reduced stagger delay
-          ease: "power1.out", // Simpler easing
+          duration: 0.5,
+          delay: index * 0.03,
+          ease: "power1.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 90%", // Optimized trigger
-            end: "bottom 10%",
-            toggleActions: "play none none reverse"
+            start: "top 95%",
+            end: "bottom 5%",
+            toggleActions: "play none none reverse",
+            fastScrollEnd: true,
+            refreshPriority: -1,
+            // Lenis integration
+            onUpdate: (self) => {
+              // Smooth scroll integration
+              if (self.progress > 0.1) {
+                section.style.willChange = 'auto';
+              }
+            }
           }
         });
       }
@@ -631,8 +640,8 @@ export default function LessonsPage() {
                 </p>
                 
                 <div className="space-y-4">
-                  <div className="bg-gradient-to-r from-blue-700/30 to-blue-800/30 rounded-xl p-4 border border-blue-600/30">
-                    <h4 className="text-lg font-semibold text-blue-200 mb-2">Kiểu cơ bản:</h4>
+                  <div className="bg-gradient-to-r from-amber-800/40 to-amber-900/40 rounded-xl p-4 border border-amber-700/40">
+                    <h4 className="text-lg font-semibold text-amber-200 mb-2">Kiểu cơ bản:</h4>
                     <ul className="text-white/90 space-y-1">
                       <li>• Nhà nước chiếm hữu nô lệ</li>
                       <li>• Nhà nước phong kiến</li>
@@ -640,8 +649,8 @@ export default function LessonsPage() {
                     </ul>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-emerald-700/30 to-emerald-800/30 rounded-xl p-4 border border-emerald-600/30">
-                    <h4 className="text-lg font-semibold text-emerald-200 mb-2">Kiểu đặc biệt:</h4>
+                  <div className="bg-gradient-to-r from-amber-800/40 to-amber-900/40 rounded-xl p-4 border border-amber-700/40">
+                    <h4 className="text-lg font-semibold text-amber-200 mb-2">Kiểu đặc biệt:</h4>
                     <p className="text-white/90">• Nhà nước vô sản</p>
                   </div>
                 </div>
@@ -669,8 +678,8 @@ export default function LessonsPage() {
                 </p>
                 
                 <div className="space-y-4">
-                  <div className="bg-gradient-to-r from-rose-700/30 to-rose-800/30 rounded-xl p-4 border border-rose-600/30">
-                    <h4 className="text-lg font-semibold text-rose-200 mb-2">Nhà nước chiếm hữu nô lệ:</h4>
+                  <div className="bg-gradient-to-r from-amber-800/40 to-amber-900/40 rounded-xl p-4 border border-amber-700/40">
+                    <h4 className="text-lg font-semibold text-amber-200 mb-2">Nhà nước chiếm hữu nô lệ:</h4>
                     <ul className="text-white/90 space-y-1 text-sm">
                       <li>• Quân chủ chủ nô</li>
                       <li>• Cộng hòa quý tộc</li>
@@ -678,8 +687,8 @@ export default function LessonsPage() {
                     </ul>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-purple-700/30 to-purple-800/30 rounded-xl p-4 border border-purple-600/30">
-                    <h4 className="text-lg font-semibold text-purple-200 mb-2">Nhà nước tư sản:</h4>
+                  <div className="bg-gradient-to-r from-amber-800/40 to-amber-900/40 rounded-xl p-4 border border-amber-700/40">
+                    <h4 className="text-lg font-semibold text-amber-200 mb-2">Nhà nước tư sản:</h4>
                     <ul className="text-white/90 space-y-1 text-sm">
                       <li>• Quân chủ lập hiến</li>
                       <li>• Cộng hòa đại nghị</li>
@@ -687,8 +696,8 @@ export default function LessonsPage() {
                     </ul>
                   </div>
                   
-                  <div className="bg-gradient-to-r from-emerald-700/30 to-emerald-800/30 rounded-xl p-4 border border-emerald-600/30">
-                    <h4 className="text-lg font-semibold text-emerald-200 mb-2">Nhà nước vô sản:</h4>
+                  <div className="bg-gradient-to-r from-amber-800/40 to-amber-900/40 rounded-xl p-4 border border-amber-700/40">
+                    <h4 className="text-lg font-semibold text-amber-200 mb-2">Nhà nước vô sản:</h4>
                     <ul className="text-white/90 space-y-1 text-sm">
                       <li>• Công xã</li>
                       <li>• Xô viết</li>

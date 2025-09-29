@@ -235,6 +235,30 @@ canvas[data-engine="three.js"] {
   contain: strict;
 }
 
+/* Scroll performance optimizations */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Optimize scroll performance */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce repaints during scroll */
+.section, .card, .hero {
+  contain: layout style paint;
+  will-change: auto;
+}
+
+/* Optimize GSAP animations */
+.gsap-animated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 html, body {
   max-width: 100%;
   overflow-x: hidden;

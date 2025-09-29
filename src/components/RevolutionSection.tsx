@@ -32,20 +32,20 @@ export default function RevolutionSection() {
       if (section) {
         gsap.fromTo(section, {
           opacity: 0,
-          y: 30, // Reduced movement
-          scale: 0.98 // Reduced scale change
+          y: 10 // Further reduced movement
         }, {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.8, // Reduced duration
-          delay: index * 0.1, // Reduced stagger delay
-          ease: "power1.out", // Simpler easing
+          duration: 0.5, // Much reduced duration
+          delay: index * 0.03, // Much reduced stagger
+          ease: "power1.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 90%", // Optimized trigger
-            end: "bottom 10%",
-            toggleActions: "play none none reverse"
+            start: "top 95%", // Later trigger for better performance
+            end: "bottom 5%",
+            toggleActions: "play none none reverse",
+            fastScrollEnd: true, // Performance optimization
+            refreshPriority: -1 // Lower priority
           }
         });
       }
