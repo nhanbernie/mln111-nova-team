@@ -23,7 +23,7 @@ function MLN() {
   const location = useLocation();
 
   // Initialize Lenis for smooth scrolling
-  useLenis();
+  // useLenis();
 
   const toggleMusic = () => {
     if (audioRef.current) {
