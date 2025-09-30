@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { useLenis } from "./hooks/useLenis";
+// import { useLenis } from "./hooks/useLenis";
 import LoadingScreen from "./components/LoadingScreen";
 import MusicToggle from "./components/MusicToggle";
 import BottomNavBar from "./components/BottomNavBar";
