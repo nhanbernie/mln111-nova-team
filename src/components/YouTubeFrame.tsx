@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { VideoCameraIcon } from "@heroicons/react/24/outline";
+import { useState, useEffect } from "react";
 
 interface YouTubeFrameProps {
   videoId: string;
@@ -12,13 +13,22 @@ export default function YouTubeFrame({
   title, 
   description = "Khám phá thêm về Triết học Mác-Lênin qua video học tập" 
 }: YouTubeFrameProps) {
+  const [showTip, setShowTip] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTip(false);
+    }, 3000); // Ẩn sau 3 giây
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="relative py-20 px-4 sm:px-6 lg:px-8 z-[1000]"
+      className="relative py-20 px-4 sm:px-6 lg:px-8"
       style={{ pointerEvents: 'auto' }}
     >
       {/* Background Pattern */}
@@ -27,7 +37,7 @@ export default function YouTubeFrame({
         <div className="w-full h-full bg-gradient-to-br from-amber-100/20 to-orange-100/20" />
       </div>
       
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-[1000] max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -91,29 +101,29 @@ export default function YouTubeFrame({
 
             {/* Frame Footer */}
             <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
-              <div className="flex items-center justify-between text-sm text-gray-600">
+              <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
                 <span className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                   YouTube
                 </span>
                 <span>Triết học Mác-Lênin</span>
               </div>
+              {showTip && (
+                <motion.div 
+                  className="text-center"
+                  initial={{ opacity: 1, y: 0 }}
+                  animate={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 1, delay: 2 }}
+                >
+                  <p className="text-gray-600 text-xs">
+                    💡 <strong>Mẹo:</strong> Bật phụ đề để học hiệu quả hơn
+                  </p>
+                </motion.div>
+              )}
             </div>
           </div>
         </motion.div>
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mt-8"
-        >
-          <p className="text-gray-600 text-sm">
-            💡 <strong>Mẹo:</strong> Bật phụ đề để học hiệu quả hơn
-          </p>
-        </motion.div>
       </div>
     </motion.section>
   );
