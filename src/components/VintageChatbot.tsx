@@ -205,8 +205,8 @@ export default function VintageChatbot({ isOpen, onClose }: VintageChatbotProps)
             transition={{ duration: 0.3, ease: "easeOut" }}
             className={`fixed z-[300] bg-gradient-to-br from-[#8B4513]/70 to-[#D97706]/70 rounded-3xl shadow-2xl border border-white/20 flex flex-col overflow-hidden popup-container ${
               isExpanded 
-                ? 'inset-4' 
-                : 'bottom-24 left-24 w-[28rem] h-[32rem]'
+                ? 'inset-2 sm:inset-4' 
+                : 'bottom-4 left-4 sm:bottom-24 sm:left-24 w-[calc(100vw-2rem)] h-[calc(100vh-8rem)] sm:w-[28rem] sm:h-[32rem]'
             }`}
           >
             {/* Header */}

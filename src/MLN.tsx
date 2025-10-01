@@ -102,10 +102,10 @@ function MLN() {
       {showContent && (
         <button
           onClick={() => setIsChatbotOpen(true)}
-          className="fixed bottom-44 left-6 z-[100] w-12 h-12 bg-gradient-to-br from-[#8B4513]/80 to-[#D97706]/80 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+          className="fixed bottom-20 left-4 sm:bottom-44 sm:left-6 z-[100] w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#8B4513]/80 to-[#D97706]/80 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
         >
           <svg
-            className="w-5 h-5 text-white group-hover:scale-110 transition-transform"
+            className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
