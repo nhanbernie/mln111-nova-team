@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import AnimatedTitle from "../components/AnimatedTitle";
 import ScrollSections from "../components/ScrollSections";
+import YouTubeFrame from "../components/YouTubeFrame";
 import Footer from "../components/Footer";
 
 export default function HomePage() {
@@ -20,6 +21,13 @@ export default function HomePage() {
       
       {/* Scroll Sections */}
       <ScrollSections />
+      
+      {/* YouTube Video Section */}
+      <YouTubeFrame 
+        videoId="Sc0Xp0Ijn6A" 
+        title="Triết học Mác-Lênin"
+        description="Khám phá sâu hơn về Triết học Mác-Lênin qua video present, giúp bạn hiểu rõ hơn về nhà nước và cách mạng xã hội."
+      />
       
       {/* Footer */}
       <Footer />
