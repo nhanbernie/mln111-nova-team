@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import AnimatedTitle from "../components/AnimatedTitle";
 import ScrollSections from "../components/ScrollSections";
+import Footer from "../components/Footer";
 
 export default function HomePage() {
   return (
@@ -19,6 +20,9 @@ export default function HomePage() {
       
       {/* Scroll Sections */}
       <ScrollSections />
+      
+      {/* Footer */}
+      <Footer />
     </>
   );
 }
