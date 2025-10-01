@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   HomeIcon,
@@ -27,8 +27,44 @@ const navItems: NavItem[] = [
 const BottomNavBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeItem, setActiveItem] = useState("home");
+  const [isMobile, setIsMobile] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const navigate = useNavigate();
+
+  // Check if device is mobile/tablet
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // Handle scroll behavior for mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY < lastScrollY && currentScrollY > 100) {
+        // Scrolling up and not at top
+        setIsExpanded(true);
+      } else if (currentScrollY > lastScrollY || currentScrollY <= 100) {
+        // Scrolling down or at top
+        setIsExpanded(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMobile, lastScrollY]);
 
   const playClickSound = () => {
     if (audioRef.current) {
@@ -42,6 +78,11 @@ const BottomNavBar = () => {
   const handleNavClick = (itemId: string) => {
     playClickSound();
     setActiveItem(itemId);
+    
+    // On mobile, close the nav after clicking
+    if (isMobile) {
+      setIsExpanded(false);
+    }
     
     switch (itemId) {
       case "home":
@@ -64,18 +105,30 @@ const BottomNavBar = () => {
     }
   };
 
+  const handleToggleClick = () => {
+    if (isMobile) {
+      setIsExpanded(!isExpanded);
+    }
+  };
+
   return (
     <>
       <audio ref={audioRef} preload="auto">
         <source src="/ui-sound.mp3" type="audio/mpeg" />
       </audio>
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[200]">
+      <div className={`fixed ${isMobile ? 'bottom-4' : 'bottom-6'} left-1/2 transform -translate-x-1/2 z-[200]`}>
         <motion.div
           className="relative"
           onHoverStart={() => {
-            setIsExpanded(true);
+            if (!isMobile) {
+              setIsExpanded(true);
+            }
           }}
-          onHoverEnd={() => setIsExpanded(false)}
+          onHoverEnd={() => {
+            if (!isMobile) {
+              setIsExpanded(false);
+            }
+          }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           {/* Collapsed State - Hamburger Button */}
@@ -87,6 +140,7 @@ const BottomNavBar = () => {
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "backOut" }}
                 className="w-16 h-16 rounded-full cursor-pointer relative overflow-hidden"
+                onClick={handleToggleClick}
                 style={{
                   background:
                     "linear-gradient(135deg, #8B4513 0%, #D97706 50%, #B45309 100%)",
@@ -154,7 +208,7 @@ const BottomNavBar = () => {
                   opacity: { duration: 0.2 },
                   scale: { duration: 0.25, ease: "backOut" },
                 }}
-                className="flex items-center gap-2 px-4 py-3 rounded-full relative overflow-hidden"
+                className={`flex items-center gap-2 ${isMobile ? 'px-3 py-2' : 'px-4 py-3'} rounded-full relative overflow-hidden`}
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(217, 119, 6, 0.95) 50%, rgba(180, 83, 9, 0.95) 100%)",
@@ -200,7 +254,7 @@ const BottomNavBar = () => {
                     >
                       {/* Button Container */}
                       <motion.div
-                        className="w-12 h-12 rounded-full flex items-center justify-center relative overflow-hidden cursor-pointer"
+                        className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} rounded-full flex items-center justify-center relative overflow-hidden cursor-pointer`}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                         animate={isActive ? { scale: 1.05 } : { scale: 1 }}
@@ -224,7 +278,7 @@ const BottomNavBar = () => {
                           transition={{ duration: 0.6, repeat: Infinity }}
                         >
                           <Icon
-                            className={`w-6 h-6 ${
+                            className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6'} ${
                               isActive ? "text-white" : "text-white/80"
                             } drop-shadow-sm`}
                           />
