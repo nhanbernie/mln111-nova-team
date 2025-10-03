@@ -9,7 +9,7 @@ const MusicToggle = ({ isPlaying, onToggle }: MusicToggleProps) => {
   return (
     <motion.button
       onClick={onToggle}
-      className="fixed top-6 right-6 z-50 w-14 h-14 bg-[#2D1810] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300"
+      className="fixed top-6 right-6 z-[1000] w-14 h-14 bg-[#2D1810] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       animate={
