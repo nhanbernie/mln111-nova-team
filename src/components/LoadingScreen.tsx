@@ -9,7 +9,7 @@ const LoadingScreen = () => {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[oklch(0.92_0.04_95)] text-[oklch(0.28_0.06_60)]"
+      className="fixed inset-0 z-[1001] flex items-center justify-center bg-[oklch(0.92_0.04_95)] text-[oklch(0.28_0.06_60)]"
       // style={{
       //   background:
       //     "linear-gradient(135deg, oklch(0.96 0.05 255) 0%, oklch(0.90 0.10 255) 50%, oklch(0.75 0.16 255) 100%)"
